@@ -24,7 +24,7 @@ Router.get("/me",auth,async (req,res)=>{
 
 
 // @Validation Rules
-const validationRules = [
+var validationRules = [
     check('status',"Status is required").not().isEmpty(),
     check('skills',"Skills are required").not().isEmpty()
 ];
@@ -39,6 +39,7 @@ Router.post("/",[auth,validationRules],async (req,res)=>{
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array()});
         }
+        
         let {
             company,
             website,
@@ -70,6 +71,7 @@ Router.post("/",[auth,validationRules],async (req,res)=>{
         if(facebook) profileObj.social.facebook = facebook;
         if(instragram) profileObj.social.instragram = instragram;
 
+
         //check if profile has already been created
         let userProfile = await Profile.findOne({user:req.user.id});
         let profile ;
@@ -86,9 +88,6 @@ Router.post("/",[auth,validationRules],async (req,res)=>{
         res.status(500).send("Server error");
     }
 });
-
-module.exports = Router;
-
 
 
 // @ROUTE : GET api/profile
@@ -113,13 +112,13 @@ Router.get("/user/:id",async (req,res)=>{
     try{
         let profile = await Profile.findOne({user:req.params.id}).populate("user",["name","avatar"]);
         if(!profile){
-            return res.status(400).json([{msg:"Profile not found"}])
+            return res.status(400).json({error:[{msg:"Profile not found"}]})
         }
         res.json(profile);
     }catch (err){
         console.log(err.message);
         if(err.kind=="ObjectId"){
-            return res.status(400).json([{msg:"Profile not found"}])
+            return res.status(400).json({error:[{msg:"Profile not found"}]})
         }
         res.status(500).send("Server error");
     }
@@ -142,3 +141,164 @@ Router.delete("/",auth,async (req,res)=>{
         res.status(500).send("Server error");
     }
 });
+
+
+
+// @Validation Rules
+validationRules = [
+    check('title',"Title is required").not().isEmpty(),
+    check('company',"Company is required").not().isEmpty(),
+    check('location',"Location are required").not().isEmpty(),
+    check('from',"From Date is required").not().isEmpty(),
+];
+
+// @ROUTE  : Post api/profile/experience
+// @DESC   : This route will add or update experience to user profile
+// @Access : Private
+Router.post("/experience/:id?",[auth,validationRules],async (req,res)=>{
+    try{
+        //check if all the validation has been done
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array()});
+        }
+        let {
+            title,
+            company,
+            location,
+            from,
+            to,
+            current,
+            description,
+        } = req.body;
+
+        let experienceObj = {title,company,location,from};
+        if(to) experienceObj.to = to;
+        if(current) experienceObj.current = current;
+        if(description) experienceObj.description = description;
+
+        let userProfile = await Profile.findOne({user:req.user.id});
+        if(userProfile){
+            let expIndex = userProfile.experiences.map((item)=> item.id).indexOf(req.params.id);
+            if(expIndex>-1){
+                userProfile.experiences[expIndex] = experienceObj;
+            }else{
+                userProfile.experiences.unshift(experienceObj);
+            }
+        }else{
+            userProfile = {user:req.user.id};
+            userProfile.experiences = new Array();
+            userProfile.unshift(experienceObj);
+        }
+        await userProfile.save();
+        res.json(userProfile);
+    }catch (err){
+        console.log(err.message);
+        res.status(500).send("Server error ");
+    }
+});
+
+
+// @ROUTE  : Post api/profile/experience
+// @DESC   : This route will delete experience from user profile
+// @Access : Private
+Router.delete("/experience/:id",auth,async (req,res)=>{
+    try{
+        let userProfile = await Profile.findOne({user:req.user.id});
+
+        if(!userProfile){
+            return res.status(400).json({error:[{msg:"No profile found"}]})
+        }
+
+        let expIndex = userProfile.experiences.map((item)=> item.id).indexOf(req.params.id);
+        if(expIndex>-1){
+            userProfile.experiences.splice(expIndex,1);
+            await userProfile.save();
+        }
+        res.json(userProfile);
+    }catch (err){
+        console.log(err.message);
+        res.status(500).send("Server error ");
+    }
+});
+
+
+
+// @Validation Rules
+validationRules = [
+    check('school',"School is required").not().isEmpty(),
+    check('degree',"Degree is required").not().isEmpty(),
+    check('fieldOfStudy',"Field of Study is required").not().isEmpty(),
+    check('from',"From Date is required").not().isEmpty(),
+];
+
+// @ROUTE  : Post api/profile/education
+// @DESC   : This route will add or update education to user profile
+// @Access : Private
+Router.post("/education/:id?",[auth,validationRules],async (req,res)=>{
+    try{
+        //check if all the validation has been done
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array()});
+        }
+        let {
+            school,
+            degree,
+            fieldOfStudy,
+            from,
+            to,
+            current,
+            description,
+        } = req.body;
+
+        let educationObj = {school,degree,fieldOfStudy,from};
+        if(to) educationObj.to = to;
+        if(current) educationObj.current = current;
+        if(description) educationObj.description = description;
+
+        let userProfile = await Profile.findOne({user:req.user.id});
+        if(userProfile){
+            let expIndex = userProfile.education.map((item)=> item.id).indexOf(req.params.id);
+            if(expIndex>-1){
+                userProfile.education[expIndex] = educationObj;
+            }else{
+                userProfile.education.unshift(educationObj);
+            }
+        }else{
+            userProfile = {user:req.user.id};
+            userProfile.education = new Array();
+            userProfile.unshift(educationObj);
+        }
+        await userProfile.save();
+        res.json(userProfile);
+    }catch (err){
+        console.log(err.message);
+        res.status(500).send("Server error ");
+    }
+});
+
+
+// @ROUTE  : Post api/profile/experience
+// @DESC   : This route will delete experience from user profile
+// @Access : Private
+Router.delete("/education/:id",auth,async (req,res)=>{
+    try{
+        let userProfile = await Profile.findOne({user:req.user.id});
+        if(!userProfile){
+            return res.status(400).json({error:[{msg:"No profile found"}]})
+        }
+        let expIndex = userProfile.education.map((item)=> item.id).indexOf(req.params.id);
+        if(expIndex>-1){
+            userProfile.education.splice(expIndex,1);
+            await userProfile.save();
+        }
+        res.json(userProfile);
+    }catch (err){
+        console.log(err.message);
+        res.status(500).send("Server error ");
+    }
+});
+
+
+module.exports = Router;
