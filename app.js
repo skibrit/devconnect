@@ -15,6 +15,7 @@ app.use(express.json({extended:false}));
 app.use("/api/registration",Routes.registration);
 app.use("/api/auth",Routes.auth);
 app.use("/api/profile",Routes.profile);
+app.use("/api/post",Routes.post);
 
 app.listen(PORT,()=>{
     console.log(`Server is listening on ${PORT}`);

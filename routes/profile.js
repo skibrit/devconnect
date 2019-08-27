@@ -39,7 +39,7 @@ Router.post("/",[auth,validationRules],async (req,res)=>{
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array()});
         }
-        
+
         let {
             company,
             website,
