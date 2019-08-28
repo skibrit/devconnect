@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700&display=swap');
+@import "./assets/styles/vars";
+
+body{
+  font-family: 'Raleway', sans-serif !important;
+}
+.section{
+  margin-top: 20px;
+}
+.page-title-wrapper{
+  margin-bottom: 25px;
+  .page-title{
+    color: $primary;
+    font-size: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}

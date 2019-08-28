@@ -1,0 +1,47 @@
+@import "../../assets/styles/vars";
+
+#landing-page{
+  padding: 0px;
+  .masthead{
+    height: 100vh;
+    background-image: url("../../assets/images/landing2.jpeg");
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .masthead-content{
+    text-align: center;
+    //background-color: rgba(0,0,0,.5);
+    padding: 45px 25px;
+    h2{
+      margin-top: 0px;
+      color: #dddddd;
+      margin-bottom: 15px;
+      font-size: 40px;
+      font-weight: bold;
+    }
+    h3{
+      color: #dddddd;
+      margin: 0px;
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .masthead-btn-wrapper{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 25px;
+      .masthead-btn{
+        padding: 10px;
+        a{
+          display: inline-block;
+          border: 2px solid rgba(134,137,138,.5);
+          padding: 10px 25px;
+        }
+      }
+    }
+  }
+}

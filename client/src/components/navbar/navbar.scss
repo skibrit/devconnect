@@ -1,0 +1,35 @@
+@import "../../assets/styles/vars";
+
+
+#mainNav{
+
+  padding: 10px 45px;
+    .navbar-brand{
+      color:$navColor;
+      font-weight: bold;
+
+      .nav-logo{
+        width: 52px;
+        height: 52px;
+        margin-right: 10px;
+        position: relative;
+        top: -3px;
+      }
+    }
+    .nav-link{
+      color: $navColor;
+      font-weight: bold;
+      &:hover{
+        color: darken($primary,10%);
+      }
+    }
+}
+
+.nav-transparent{
+  background-color: rgba(0,0,0,.5);
+}
+
+.nav-fill{
+  background-color: #101111;
+  margin-bottom: 40px;
+}
