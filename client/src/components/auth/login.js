@@ -1,6 +1,9 @@
 import React,{useState} from "react";
+import {Redirect} from "react-router-dom";
+import {connect} from 'react-redux';
+import {login} from "../../actions/auth";
 
-const Login = ()=>{
+const Login = ({login,isAuthenticated})=>{
 
     const [formData, setFormData] = useState({
         email:'',
@@ -10,8 +13,13 @@ const Login = ()=>{
     const onChange = e => setFormData({...formData,[e.target.name]:e.target.value});
     const onSubmit = (e)=>{
         e.preventDefault();
-        console.log(formData);
+        login(email,password);
     };
+
+    if(isAuthenticated){
+        return <Redirect to="/dashboard"/>
+    }
+
     return(
         <div className="section" onSubmit={e=>onSubmit(e)}>
             <div className='page-title-wrapper'>
@@ -37,4 +45,13 @@ const Login = ()=>{
     )
 };
 
-export default Login;
+
+const mapStateToProps = (state) => ({
+    isAuthenticated:state.authStates.isAuthenticated
+});
+
+const mapDispatchToProps = {
+    login
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

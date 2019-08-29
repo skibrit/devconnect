@@ -4,7 +4,9 @@ import Home from "./components/home/home";
 import Register from "./components/auth/register";
 import Login from "./components/auth/login";
 import Navbar from "./components/navbar/navbar";
+import Dashboard from "./components/dashboard/dashboard";
 import Alert from "./components/layouts/alert/alert";
+import PrivateRoute from "./components/privateRoute/privateRoute";
 import {authenticateUser} from "./actions/auth";
 import './App.scss';
 
@@ -29,6 +31,7 @@ function App() {
                           <Switch>
                               <Route exact path="/register" component={Register} />
                               <Route exact path="/login" component={Login} />
+                              <PrivateRoute exact path="/dashboard" component={Dashboard} />
                           </Switch>
                   </section>
               </Fragment>
