@@ -3,7 +3,7 @@ import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import Home from "./components/home/home";
 import Register from "./components/auth/register";
 import Login from "./components/auth/login";
-import Navbar from "./components/navbar/navbar";
+import Navbar from "./components/layouts/navbar/navbar";
 import Dashboard from "./components/dashboard/dashboard";
 import Alert from "./components/layouts/alert/alert";
 import PrivateRoute from "./components/privateRoute/privateRoute";

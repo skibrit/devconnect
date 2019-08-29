@@ -1,9 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700,800&display=swap');
 @import "./assets/styles/vars";
 
-body{
-  font-family: 'Raleway', sans-serif !important;
+*{
+  font-family: 'Poppins', sans-serif;
 }
+
+h1,h2,h3,h4,h5,h6,.btn{
+  font-family: 'Poppins', sans-serif;
+}
+
 .section{
   margin-top: 20px;
 }
@@ -11,7 +16,7 @@ body{
   margin-bottom: 25px;
   .page-title{
     color: $primary;
-    font-size: 30px;
+    font-size: 35px;
     font-weight: bold;
     text-transform: uppercase;
   }

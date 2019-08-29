@@ -7,3 +7,6 @@ export const USER_AUTH_ERROR = "user authentication failed";
 export const LOGIN_FAILED = "login failed";
 export const LOGIN_SUCCESS = "login success";
 export const LOGOUT = "logout";
+export const GET_PROFILE = "get current user profile";
+export const GET_PROFILE_ERROR = "profile fetch error";
+export const CLEAR_PROFILE = "clear loaded profile";

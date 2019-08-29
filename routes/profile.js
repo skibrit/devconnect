@@ -6,7 +6,7 @@ const User = require("../models/User");
 const Profile = require("../models/Profile");
 
 
-// @ROUTE : GET api/profile/inspect
+// @ROUTE : GET api/profile/me
 // @DESC  : This route with return the profile information of an user
 // @Access : Private
 Router.get("/me",auth,async (req,res)=>{

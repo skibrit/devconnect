@@ -2,7 +2,7 @@ import React,{Fragment} from "react";
 import { Link } from 'react-router-dom';
 import { connect} from "react-redux";
 import {withRouter} from 'react-router-dom';
-import {logout} from "../../actions/auth";
+import {logout} from "../../../actions/auth";
 import './navbar.scss';
 
 const NavBar = ({location,isAuthenticated,logout,isLoading})=>{
@@ -13,16 +13,25 @@ const NavBar = ({location,isAuthenticated,logout,isLoading})=>{
         return(
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                    <Link to="/developers" className="nav-link">Dashboard</Link>
+                    <Link to="/dashboard" className="nav-link">
+                        <i class="fas fa-user"></i>
+                        Dashboard
+                    </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/developers" className="nav-link">Developer</Link>
+                    <Link to="/developers" className="nav-link">
+                        <i class="fas fa-user-friends"></i>
+                        Developer
+                    </Link>
                 </li>
                 <li className="nav-item" >
                     <Link to="/" className="nav-link" onClick={(e)=>{
                         e.preventDefault();
                         logout();
-                    }}>LogOut</Link>
+                    }}>
+                        <i class="fas fa-sign-out-alt"></i>
+                        LogOut
+                    </Link>
                 </li>
             </ul>
         )
@@ -32,13 +41,22 @@ const NavBar = ({location,isAuthenticated,logout,isLoading})=>{
         return(
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                    <Link to="/login" className="nav-link">Developer</Link>
+                    <Link to="/login" className="nav-link">
+                        <i class="fas fa-user-friends"></i>
+                        Developer
+                    </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/login" className="nav-link">Login</Link>
+                    <Link to="/login" className="nav-link">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Login
+                    </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/register" className="nav-link">Register</Link>
+                    <Link to="/register" className="nav-link">
+                        <i class="fas fa-user-friends"></i>
+                        Register
+                    </Link>
                 </li>
             </ul>
         )
@@ -48,7 +66,7 @@ const NavBar = ({location,isAuthenticated,logout,isLoading})=>{
             <nav className={pathname==='/'?"navbar navbar-expand-lg navbar-dark fixed-top nav-transparent":
                 "navbar navbar-expand-lg navbar-dark nav-fill"}  id='mainNav'>
                 <Link to="/" className="navbar-brand" href="#">
-                    <img className='nav-logo' src={require('../../assets/images/connect.png')} alt="logo"/>
+                    <img className='nav-logo' src={require('../../../assets/images/connect.png')} alt="logo"/>
                     DevConnect
                 </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
