@@ -20,9 +20,10 @@ export const authenticateUser = () => async dispatch =>{
             payload:response.data
         })
     }catch (err){
+        console.log(err)
         dispatch({
             type:USER_AUTH_ERROR,
-            payload:err.response.data
+            payload:err.response?err.response.data:"Error occurred"
         })
     }
 };

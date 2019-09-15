@@ -14,13 +14,13 @@ const NavBar = ({location,isAuthenticated,logout,isLoading})=>{
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
                     <Link to="/dashboard" className="nav-link">
-                        <i class="fas fa-user"></i>
+                        <i className="fas fa-user"></i>
                         Dashboard
                     </Link>
                 </li>
                 <li className="nav-item">
                     <Link to="/developers" className="nav-link">
-                        <i class="fas fa-user-friends"></i>
+                        <i className="fas fa-user-friends"></i>
                         Developer
                     </Link>
                 </li>
@@ -29,7 +29,7 @@ const NavBar = ({location,isAuthenticated,logout,isLoading})=>{
                         e.preventDefault();
                         logout();
                     }}>
-                        <i class="fas fa-sign-out-alt"></i>
+                        <i className="fas fa-sign-out-alt"></i>
                         LogOut
                     </Link>
                 </li>
@@ -42,19 +42,19 @@ const NavBar = ({location,isAuthenticated,logout,isLoading})=>{
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
                     <Link to="/login" className="nav-link">
-                        <i class="fas fa-user-friends"></i>
+                        <i className="fas fa-user-friends"></i>
                         Developer
                     </Link>
                 </li>
                 <li className="nav-item">
                     <Link to="/login" className="nav-link">
-                        <i class="fas fa-sign-in-alt"></i>
+                        <i className="fas fa-sign-in-alt"></i>
                         Login
                     </Link>
                 </li>
                 <li className="nav-item">
                     <Link to="/register" className="nav-link">
-                        <i class="fas fa-user-friends"></i>
+                        <i className="fas fa-user-friends"></i>
                         Register
                     </Link>
                 </li>
@@ -69,7 +69,8 @@ const NavBar = ({location,isAuthenticated,logout,isLoading})=>{
                     <img className='nav-logo' src={require('../../../assets/images/connect.png')} alt="logo"/>
                     DevConnect
                 </Link>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse " id="navbarColor01">

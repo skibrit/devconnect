@@ -1,16 +1,20 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,700,800&display=swap');
+//@import url('https://fonts.googleapis.com/css?family=Poppins:400,700,800&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700&display=swap');
 @import "./assets/styles/vars";
 
 *{
-  font-family: 'Poppins', sans-serif;
+  //font-family: 'Poppins', sans-serif;
+  font-family: 'Roboto Slab', serif;
 }
 
 h1,h2,h3,h4,h5,h6,.btn{
-  font-family: 'Poppins', sans-serif;
+ // font-family: 'Poppins', sans-serif;
+  font-family: 'Roboto Slab', serif;
 }
 
 .section{
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 .page-title-wrapper{
   margin-bottom: 25px;
@@ -18,6 +22,97 @@ h1,h2,h3,h4,h5,h6,.btn{
     color: $primary;
     font-size: 35px;
     font-weight: bold;
-    text-transform: uppercase;
+    text-transform: capitalize;
+  }
+}
+
+.modal-wrapper{
+  padding: 15px;
+  position: relative;
+  height: auto;
+  .modal-title-wrapper{
+    margin-bottom: 15px;
+    .modal-title{
+      font-size: 22px;
+      font-weight: bold;
+      color: $primary;
+    }
+  }
+}
+
+.form-group{
+  .input-clue{
+    font-size: 13px;
+    display: inline-block;
+    margin-top: 5px;
+    margin-left: 2px;
+    color: rgba(0,0,0,.8);
+  }
+  .btn-clue {
+    margin-left: 8px;
+    font-weight: 700;
+  }
+  .btn{
+    font-weight: bold;
+  }
+  .social-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    i{
+      font-size: 25px;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    .youtube{
+      color: red;
+    }
+    .twitter{
+      color: #00acee;
+    }
+    .instragram{
+      color: #3f729b;
+    }
+    .linkdin{
+      color: #0e76a8 ;
+    }
+    .facebook{
+      color: #3b5998 ;
+    }
+  }
+}
+
+
+.optional-btn-wrapper{
+  margin: 20px 0px;
+}
+
+.form-btn-wrapper{
+  margin-top: 25px;
+  .btn{
+    margin-right: 10px;
+  }
+}
+
+.fade-out{
+  height: auto;
+  transition: height 1000ms;
+  overflow: visible;
+}
+
+.fade-in{
+  height: 0px;
+  transition: height 1000ms;
+  overflow: hidden;
+}
+
+.btn-light{
+  background-color: #e7e7e7;
+  border: 1px solid rgba(181,181,181,.5);
+  font-weight: 600;
+
+  &:hover{
+    background-color: darken(#e7e7e7,10%);
   }
 }

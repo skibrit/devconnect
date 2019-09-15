@@ -10,3 +10,8 @@ export const LOGOUT = "logout";
 export const GET_PROFILE = "get current user profile";
 export const GET_PROFILE_ERROR = "profile fetch error";
 export const CLEAR_PROFILE = "clear loaded profile";
+export const OPEN_MODAL = "OPEN MODAL";
+export const CLOSE_MODAL = "CLOSE MODAL";
+
+export const EXPERIENCE_FORM = "experience form";
+export const EDUCATION_FORM = "education form";
