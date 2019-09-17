@@ -1,45 +1,23 @@
-import React,{useState,useEffect,useRef} from "react";
+import React,{useState,useEffect,useRef,Fragment} from "react";
 import {connect} from "react-redux";
-import {Redirect,withRouter} from "react-router-dom";
+import {Link,withRouter} from "react-router-dom";
 import {setAlert} from "../../../actions/alert";
-import {manageProfile} from "../../../actions/profile";
+import {manageProfile,getCurrentUserProfile,
+    addExperience_Education,deleteExperience_Education} from "../../../actions/profile";
 import {Animated} from "react-animated-css";
 import {openModal} from "../../../actions/global";
 import ExperienceForm from "../profile-forms/experienceForm";
 import EducationForm from "../profile-forms/educationForm";
 import scriptLoader from "../../../utils/loadExternalScript";
+import {convertToLocalString} from "../../../utils/DateUtill";
 import {EXPERIENCE_FORM,EDUCATION_FORM} from "../../../actions/constants"
 
-const EditProfile = ({setAlert,createProfile,history,profile,openModal})=>{
+const EditProfile = ({setAlert,getCurrentUserProfile,
+                         createProfile,history,profile:{profile,isLoading},
+                         openModal,addExperience_Education,deleteExperience_Education})=>{
+
 
     let autoCompleteField = useRef(null);
-
-    const handlePlaceChanged = (autoComplete)=>{
-        const place = autoComplete.getPlace();
-        setFormData({...formData,location:place.formatted_address})
-    };
-
-    useEffect(()=>{
-        const callApi = async ()=>{
-            try{
-                await scriptLoader("https://maps.googleapis.com/maps/api/js?key=AIzaSyDfJ2N7azyT5OST0Fy6nj2IRC0yAS_wWVc&libraries=places","google-place");
-                setTimeout(()=>{
-                    if(window.google){
-                        let autoComplete = new window.google.maps.places.Autocomplete(autoCompleteField.current,{"types": ['address']});
-                        autoComplete.addListener('place_changed', ()=>{
-                            console.log("Triggered 1");
-                            handlePlaceChanged(autoComplete);
-                        });
-                    }
-                },500)
-            }catch (err){
-                console.log(err.message)
-            }
-        };
-        callApi();
-    },[]);
-
-
 
     const [formData, setFormData] = useState({
         company:"",
@@ -55,12 +33,58 @@ const EditProfile = ({setAlert,createProfile,history,profile,openModal})=>{
         linkedin:"",
         instragram:""
     });
+
     const [showSocialLinkTab,toggleSocialLinkTab] = useState(false);
 
+    useEffect(()=>{
+        const callApi = async ()=>{
+            try{
+                await scriptLoader("https://maps.googleapis.com/maps/api/js?key=AIzaSyDfJ2N7azyT5OST0Fy6nj2IRC0yAS_wWVc&libraries=places","google-place");
+                setTimeout(()=>{
+                    if(window.google){
+                        let autoComplete = new window.google.maps.places.Autocomplete(autoCompleteField.current,{"types": ['address']});
+                        autoComplete.addListener('place_changed', ()=>{
+                            handlePlaceChanged(autoComplete,formData);
+                        });
+                    }
+                },500)
+            }catch (err){
+                console.log(err.message)
+            }
+        };
+        callApi();
+    },[]);
+
+    useEffect(()=>{
+        getCurrentUserProfile();
+        if(profile){
+            setFormData({
+                company:profile.company || "",
+                website:profile.website || "",
+                location:profile.location || "",
+                status:profile.status,
+                skills:profile.skills.join(","),
+                bio:profile.bio || "",
+                githubUserName:profile.githubUserName || "",
+                youtube:profile.social?profile.social.youtube:"",
+                twitter:profile.social?profile.social.twitter:"",
+                facebook:profile.social?profile.social.facebook:"",
+                linkedin:profile.social?profile.social.linkedin:"",
+                instragram:profile.social?profile.social.instragram:""
+            })
+        }
+    },[isLoading]);
+
+    const handlePlaceChanged = (autoComplete,formData)=>{
+        const place = autoComplete.getPlace();
+        setFormData((prevState)=>{
+            console.log(prevState);
+            return {...prevState,location:place.formatted_address};
+        })
+    };
     const {company,website,location,status,skills,
         bio,githubUserName,youtube,twitter,facebook,linkedin,instragram} = formData;
     const onChange = e => {
-        console.log(e);
         setFormData({...formData,[e.target.name]:e.target.value})
     };
     const onToggleSocialTab = e => {
@@ -69,12 +93,53 @@ const EditProfile = ({setAlert,createProfile,history,profile,openModal})=>{
 
     const onSubmit = (e)=>{
         e.preventDefault();
+        console.log(formData);
         createProfile(formData,history);
     };
 
-    if(!profile){
-        return <Redirect to="/dashboard"/>
-    }
+    const deleteItemFromList = (id,type)=>{
+        deleteExperience_Education(id,type);
+    };
+
+    const createExperienceList = ()=>{
+        const {experiences} = profile;
+        return experiences.map((exp)=>{
+            const {_id,title,company,from,to,current} = exp;
+            return(
+                <tr key={_id} index={_id}>
+                    <td>{title}</td>
+                    <td>{company}</td>
+                    <td>{convertToLocalString(from)} - {current?"Present":convertToLocalString(to)}</td>
+                    <td>
+                        <button className="btn btn-danger" onClick={(e)=>{
+                            e.preventDefault();
+                            deleteItemFromList(_id,"experience")
+                        }}>Delete</button>
+                    </td>
+                </tr>
+            )
+        })
+    };
+
+    const createEducationList = ()=>{
+        const {education} = profile;
+        return education.map((edu)=>{
+            const {_id,degree,school,fieldOfStudy,from,to,current} = edu;
+            return(
+                <tr key={_id} index={_id}>
+                    <td>{degree}</td>
+                    <td>{school}</td>
+                    <td>{convertToLocalString(from)} - {current?"Present":convertToLocalString(to)}</td>
+                    <td>
+                        <button className="btn btn-danger" onClick={(e)=>{
+                            e.preventDefault();
+                            deleteItemFromList(_id,"education")
+                        }}>Delete</button>
+                    </td>
+                </tr>
+            )
+        })
+    };
 
     return(
         <div className="section" >
@@ -118,7 +183,7 @@ const EditProfile = ({setAlert,createProfile,history,profile,openModal})=>{
                     <span className='input-clue'>Please use comma separated values (ex: HTML5,Javascript,PHP)</span>
                 </div>
                 <div className="form-group">
-                    <textarea className="form-control" id="bio" name="bio" onChange={e => onChange(e)} placeholder="Bio"></textarea>
+                    <textarea className="form-control" id="bio" name="bio" onChange={e => onChange(e)} placeholder="Bio" value={bio}></textarea>
                     <span className='input-clue'>Tell us a little about yourself</span>
                 </div>
                 <div className="form-group">
@@ -134,38 +199,21 @@ const EditProfile = ({setAlert,createProfile,history,profile,openModal})=>{
                     }}><i className="fas fa-plus"></i> Experience</button>
                 </div>
                 <div className="list-wrapper">
-                    <table className="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>Company</th>
-                            <th>Title</th>
-                            <th>Years</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>john@example.com</td>
-                            <td>
-                                <button className="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mary</td>
-                            <td>Moe</td>
-                            <td>mary@example.com</td>
-                            <td><button className="btn btn-danger">Delete</button></td>
-                        </tr>
-                        <tr>
-                            <td>July</td>
-                            <td>Dooley</td>
-                            <td>july@example.com</td>
-                            <td><button className="btn btn-danger">Delete</button></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    {profile && profile.experiences && profile.experiences.length>0 &&
+                        <table className="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>Title</th>
+                                <th>Years</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {createExperienceList()}
+                            </tbody>
+                        </table>
+                    }
                 </div>
                 <div className="form-group optional-btn-wrapper">
                     <button type="button" className="btn btn-light" onClick={()=>{
@@ -173,36 +221,22 @@ const EditProfile = ({setAlert,createProfile,history,profile,openModal})=>{
                     }}><i className="fas fa-plus"></i> Education</button>
                 </div>
                 <div className="list-wrapper">
-                    <table className="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>School</th>
-                            <th>Degree</th>
-                            <th>Years</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>john@example.com</td>
-                            <td><button className="btn btn-danger">Delete</button></td>
-                        </tr>
-                        <tr>
-                            <td>Mary</td>
-                            <td>Moe</td>
-                            <td>mary@example.com</td>
-                            <td><button className="btn btn-danger">Delete</button></td>
-                        </tr>
-                        <tr>
-                            <td>July</td>
-                            <td>Dooley</td>
-                            <td>july@example.com</td>
-                            <td><button className="btn btn-danger">Delete</button></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    {
+                        profile && profile.education && profile.education.length>0 &&
+                        <table className="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>School</th>
+                                <th>Degree</th>
+                                <th>Years</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {createEducationList()}
+                            </tbody>
+                        </table>
+                    }
                 </div>
 
                 <div className="form-group optional-btn-wrapper">
@@ -251,23 +285,27 @@ const EditProfile = ({setAlert,createProfile,history,profile,openModal})=>{
                 </Animated>
                 <div className="form-group form-btn-wrapper">
                     <button type="submit" className="btn btn-primary">Update</button>
-                    <button type="button" className="btn btn-primary"><i className="fas fa-arrow-left"></i> Go Back</button>
+                    <Link to="/dashboard" type="button" className="btn btn-primary"><i className="fas fa-arrow-left"></i> Go Back</Link>
                 </div>
             </form>
-            <ExperienceForm/>
+            <ExperienceForm submitHandler={addExperience_Education} setAlert={setAlert}/>
+            <EducationForm submitHandler={addExperience_Education} setAlert={setAlert}/>
         </div>
     )
 };
 
 
 const mapStateToProps = (state) => ({
-    profile:state.profileStates.profile
+    profile:state.profileStates
 });
 
 const mapDispatchAction = {
     setAlert,
     createProfile:manageProfile,
-    openModal
+    openModal,
+    getCurrentUserProfile,
+    addExperience_Education,
+    deleteExperience_Education
 };
 
 export default connect(mapStateToProps,mapDispatchAction) (withRouter(EditProfile));

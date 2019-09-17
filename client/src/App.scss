@@ -26,16 +26,28 @@ h1,h2,h3,h4,h5,h6,.btn{
   }
 }
 
+.rodal-dialog{
+  background-color: rgba(0,0,0,0);
+  padding: 0px !important;
+}
 .modal-wrapper{
-  padding: 15px;
+  background-color: rgba(0,0,0,0);
+  height: 100%;
+  width: 100%;
   position: relative;
-  height: auto;
-  .modal-title-wrapper{
-    margin-bottom: 15px;
-    .modal-title{
-      font-size: 22px;
-      font-weight: bold;
-      color: $primary;
+  display: flex;
+  align-items: center;
+  .modal-dialogue{
+    background-color: white;
+    padding: 25px;
+    width: 100%;
+    .modal-title-wrapper{
+      margin-bottom: 15px;
+      .modal-title{
+        font-size: 22px;
+        font-weight: bold;
+        color: $primary;
+      }
     }
   }
 }

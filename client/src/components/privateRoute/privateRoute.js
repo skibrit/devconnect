@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {Route,Redirect} from "react-router-dom";
 import Spinner from "../layouts/spinner/spinner";
 
-const privateRoute = ({component:Component,isAuthenticated,isLoading,...rest})=> (
+const privateRoute = ({component:Component,isAuthenticated,isLoading,waitForProfileLoad,...rest})=> (
     <Route {...rest} render={(props)=>{
         if(isLoading){
             return <Spinner/>

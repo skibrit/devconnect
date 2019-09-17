@@ -36,8 +36,8 @@ function App() {
                               <Route exact path="/login" component={Login} />
                               <PrivateRoute exact path="/dashboard" component={Dashboard} />
                               <PrivateRoute exact path="/createProfile" component={CreateProfile} />
-                              <PrivateRoute exact path="/editProfile" component={EditProfile} />
-                              <PrivateRoute exact path="/profile" component={ProfileView} />
+                              <PrivateRoute exact path="/editProfile" component={EditProfile} waitForProfileLoad={true}/>
+                              <PrivateRoute exact path="/profile" component={ProfileView} waitForProfileLoad={true}/>
                           </Switch>
                   </section>
               </Fragment>

@@ -53,18 +53,19 @@
         padding: 15px 0px;
         .profile-left-column-row-wrapper{
           .profile-left-column-row-title{
-            font-size: 16px;
+            font-size: 17px;
             font-weight: bold;
             margin-bottom: 10px;
             text-transform: uppercase;
           }
           .profile-left-column-row-content{
             .content-row{
-              padding: 2px 0px;
+              padding: 5px 0px;
               h4{
                 margin: 0px;
                 font-size: 15px;
                 cursor: pointer;
+                text-transform: uppercase;
                 &:hover{
                   color: darken( $primary,5%);
                 }
@@ -83,11 +84,13 @@
         font-size: 28px;
         font-weight: bold;
         margin-bottom: 15px;
+        text-transform: capitalize;
       }
       .user-status{
         font-size: 20px;
         font-weight: bold;
         color: darken($primary,10%);
+        text-transform: capitalize;
       }
 
       .profile-center-content-wrapper{

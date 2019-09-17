@@ -1,6 +1,6 @@
 import React,{useState,Fragment,useEffect,useRef} from "react";
 import {connect} from "react-redux";
-import {Redirect,withRouter} from "react-router-dom";
+import {Link,Redirect,withRouter} from "react-router-dom";
 import {setAlert} from "../../../actions/alert";
 import {manageProfile} from "../../../actions/profile";
 import {Animated} from "react-animated-css";
@@ -167,7 +167,7 @@ const CreateProfile = ({setAlert,createProfile,history,isAuthenticated,profile})
                 </Animated>
                <div className="form-group form-btn-wrapper">
                    <button type="submit" className="btn btn-primary">Submit</button>
-                   <button type="button" className="btn btn-primary"><i className="fas fa-arrow-left"></i> Go Back</button>
+                   <Link to="/dashboard" type="button" className="btn btn-primary"><i className="fas fa-arrow-left"></i> Go Back</Link>
                </div>
             </form>
         </div>

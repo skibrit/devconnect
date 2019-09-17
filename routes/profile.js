@@ -11,7 +11,7 @@ const Profile = require("../models/Profile");
 // @Access : Private
 Router.get("/me",auth,async (req,res)=>{
     try{
-        let userProfile = await Profile.findOne({user:req.user.id}).populate("user",["name","avatar"])
+        let userProfile = await Profile.findOne({user:req.user.id}).populate("user",["name","avatar","email"])
         if(!userProfile){
             return res.status(400).json({ errors: [{msg:"No profile found of this user"}] });
         }
@@ -199,7 +199,7 @@ Router.post("/experience/:id?",[auth,validationRules],async (req,res)=>{
 });
 
 
-// @ROUTE  : Post api/profile/experience
+// @ROUTE  : DELETE api/profile/experience/:id
 // @DESC   : This route will delete experience from user profile
 // @Access : Private
 Router.delete("/experience/:id",auth,async (req,res)=>{
@@ -279,7 +279,7 @@ Router.post("/education/:id?",[auth,validationRules],async (req,res)=>{
 });
 
 
-// @ROUTE  : Post api/profile/experience
+// @ROUTE  : Post api/profile/education/:id
 // @DESC   : This route will delete experience from user profile
 // @Access : Private
 Router.delete("/education/:id",auth,async (req,res)=>{
