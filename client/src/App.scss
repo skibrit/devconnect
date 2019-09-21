@@ -2,23 +2,30 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700&display=swap');
 @import "./assets/styles/vars";
 
-*{
+* {
   //font-family: 'Poppins', sans-serif;
   font-family: 'Roboto Slab', serif;
 }
 
-h1,h2,h3,h4,h5,h6,.btn{
- // font-family: 'Poppins', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.btn {
+  // font-family: 'Poppins', sans-serif;
   font-family: 'Roboto Slab', serif;
 }
 
-.section{
+.section {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.page-title-wrapper{
+.page-title-wrapper {
   margin-bottom: 25px;
-  .page-title{
+  position: relative;
+  .page-title {
     color: $primary;
     font-size: 35px;
     font-weight: bold;
@@ -26,24 +33,24 @@ h1,h2,h3,h4,h5,h6,.btn{
   }
 }
 
-.rodal-dialog{
-  background-color: rgba(0,0,0,0);
+.rodal-dialog {
+  background-color: rgba(0, 0, 0, 0);
   padding: 0px !important;
 }
-.modal-wrapper{
-  background-color: rgba(0,0,0,0);
+.modal-wrapper {
+  background-color: rgba(0, 0, 0, 0);
   height: 100%;
   width: 100%;
   position: relative;
   display: flex;
   align-items: center;
-  .modal-dialogue{
+  .modal-dialogue {
     background-color: white;
     padding: 25px;
     width: 100%;
-    .modal-title-wrapper{
+    .modal-title-wrapper {
       margin-bottom: 15px;
-      .modal-title{
+      .modal-title {
         font-size: 22px;
         font-weight: bold;
         color: $primary;
@@ -52,79 +59,78 @@ h1,h2,h3,h4,h5,h6,.btn{
   }
 }
 
-.form-group{
-  .input-clue{
+.form-group {
+  .input-clue {
     font-size: 13px;
     display: inline-block;
     margin-top: 5px;
     margin-left: 2px;
-    color: rgba(0,0,0,.8);
+    color: rgba(0, 0, 0, .8);
   }
   .btn-clue {
     margin-left: 8px;
     font-weight: 700;
   }
-  .btn{
+  .btn {
     font-weight: bold;
   }
-  .social-icon{
+  .social-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    i{
+    i {
       font-size: 25px;
       font-weight: bold;
       display: inline-block;
     }
 
-    .youtube{
+    .youtube {
       color: red;
     }
-    .twitter{
+    .twitter {
       color: #00acee;
     }
-    .instragram{
+    .instragram {
       color: #3f729b;
     }
-    .linkdin{
-      color: #0e76a8 ;
+    .linkdin {
+      color: #0e76a8;
     }
-    .facebook{
-      color: #3b5998 ;
+    .facebook {
+      color: #3b5998;
     }
   }
 }
 
-
-.optional-btn-wrapper{
+.optional-btn-wrapper {
   margin: 20px 0px;
 }
 
-.form-btn-wrapper{
+.form-btn-wrapper {
   margin-top: 25px;
-  .btn{
+  .btn {
     margin-right: 10px;
   }
 }
 
-.fade-out{
+.fade-out {
   height: auto;
   transition: height 1000ms;
   overflow: visible;
 }
 
-.fade-in{
+.fade-in {
   height: 0px;
   transition: height 1000ms;
   overflow: hidden;
 }
 
-.btn-light{
+.btn-light {
   background-color: #e7e7e7;
-  border: 1px solid rgba(181,181,181,.5);
+  border: 1px solid rgba(181, 181, 181, .5);
   font-weight: 600;
 
-  &:hover{
-    background-color: darken(#e7e7e7,10%);
+  &:hover {
+    background-color: darken(#e7e7e7, 10%);
   }
 }

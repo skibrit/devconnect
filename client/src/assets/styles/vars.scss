@@ -1,3 +1,15 @@
 @import "./bootstrapVars";
 
-$navColor:white;
+$navColor: white;
+
+@mixin box_shadow() {
+  -webkit-box-shadow: 5px 7px 24px -1px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 5px 7px 24px -1px rgba(0, 0, 0, 1);
+  box-shadow: 5px 7px 24px -1px rgb(192, 176, 192);
+}
+
+@mixin border_radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
