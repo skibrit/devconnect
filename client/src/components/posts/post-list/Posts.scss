@@ -1,0 +1,83 @@
+@import "../../../assets/styles/vars";
+
+$userProfileSize: 120px;
+
+.post-list-wrapper {
+  margin-top: 40px;
+  .post-list-inner-wrapper {
+    .post-row {
+      margin: 10px 0px;
+      .post-inner-wrapper {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 20px 10px;
+        background-color: #f9f9f9;
+        border: 1px ridge rgba(185, 185, 185, 0.6);
+
+        .post-left-column {
+          width: 200px;
+          // background-color: greenyellow;
+          flex-grow: 0;
+          flex-shrink: 0;
+          text-align: center;
+
+          .posted-by-user-photo-wrapper {
+            display: inline-block;
+            .posted-by-user-photo {
+              width: $userProfileSize;
+              height: $userProfileSize;
+              @include border_radius(50%);
+              overflow: hidden;
+              border: 1px ridge rgba(185, 185, 185, 0.5);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              background-color: #363535;
+              object-fit: cover;
+              img {
+                width: 100%;
+                // min-height: 100%;
+                transform: scale(1.5);
+              }
+            }
+          }
+          .posted-by-user-title {
+            font-size: 16px;
+            margin-top: 8px;
+            text-transform: capitalize;
+            font-weight: 600;
+          }
+        }
+
+        .post-right-column {
+          flex-grow: 1;
+          // background-color: yellow;
+
+          .post-data-wrapper {
+          }
+
+          .post-title {
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: capitalize;
+            color: darken($primary, 10%);
+          }
+          .post-date {
+            font-size: 14px;
+            font-weight: 600;
+          }
+          .post-action-wrapper {
+            margin-top: 20px;
+            button {
+              margin-right: 10px;
+            }
+            .liked-heart {
+              color: #fd2928;
+            }
+          }
+        }
+      }
+    }
+  }
+}

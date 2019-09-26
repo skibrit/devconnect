@@ -12,6 +12,10 @@ import EditProfile from "./components/profile/profile-forms/editProfile";
 import ProfileView from "./components/profile/profile-view/profileView";
 import { authenticateUser } from "./actions/auth";
 import ProfileList from "./components/profile/profile-list/profileList";
+import Posts from "./components/posts/post-list/Posts";
+import CreatePost from "./components/posts/post-form/CreatePost";
+import PostView from "./components/posts/post-view/PostView";
+import Footer from "./components/layouts/footer/Footer";
 import "./App.scss";
 
 //redux store
@@ -40,25 +44,15 @@ function App() {
                 path="/createProfile"
                 component={CreateProfile}
               />
-              <PrivateRoute
-                exact
-                path="/editProfile"
-                component={EditProfile}
-                waitForProfileLoad={true}
-              />
-              <PrivateRoute
-                path="/profile"
-                component={ProfileView}
-                waitForProfileLoad={true}
-              />
-              <PrivateRoute
-                exact
-                path="/developers"
-                component={ProfileList}
-                waitForProfileLoad={true}
-              />
+              <PrivateRoute exact path="/editProfile" component={EditProfile} />
+              <PrivateRoute path="/profile" component={ProfileView} />
+              <PrivateRoute exact path="/developers" component={ProfileList} />
+              <PrivateRoute exact path="/posts" component={Posts} />
+              <PrivateRoute exact path="/createPost" component={CreatePost} />
+              <PrivateRoute exact path="/post/:id" component={PostView} />
             </Switch>
           </section>
+          <Footer />
         </Fragment>
       </Router>
     </Provider>

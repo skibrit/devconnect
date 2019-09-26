@@ -1,5 +1,6 @@
 //@import url('https://fonts.googleapis.com/css?family=Poppins:400,700,800&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap');
 @import "./assets/styles/vars";
 
 * {
@@ -21,6 +22,7 @@ h6,
 .section {
   margin-top: 20px;
   margin-bottom: 20px;
+  min-height: 100vh;
 }
 .page-title-wrapper {
   margin-bottom: 25px;
@@ -30,6 +32,10 @@ h6,
     font-size: 35px;
     font-weight: bold;
     text-transform: capitalize;
+  }
+  .page-sub-title {
+    font-size: 25px;
+    margin-top: 20px;
   }
 }
 
@@ -132,5 +138,23 @@ h6,
 
   &:hover {
     background-color: darken(#e7e7e7, 10%);
+  }
+}
+
+.RichTextEditor__editor___1QqIU,
+.editorClassName {
+  min-height: 300px;
+  max-height: 500px;
+  overflow: auto;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 15px;
+}
+
+.default-box {
+  padding: 25px 0px;
+  text-align: center;
+  .default-text {
+    font-size: 24px;
+    font-weight: 600;
   }
 }

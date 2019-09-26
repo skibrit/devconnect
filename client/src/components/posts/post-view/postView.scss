@@ -1,0 +1,167 @@
+@import "../../../assets/styles/vars.scss";
+
+$imageSize: 60px;
+$commentPicSize: 70px;
+$imageBorder: 1px ridge rgba(0, 0, 0, 0.3);
+
+.s-post-wrapper {
+  .post-header {
+    .post-title {
+      font-size: 35px;
+      font-weight: bold;
+      color: $primary;
+      margin-bottom: 25px;
+    }
+
+    .posted-on {
+      margin-top: 25px;
+      font-size: 16px;
+      //font-weight: bold;
+    }
+  }
+
+  .post-content-wrapper {
+    margin-top: 20px;
+    .post-content {
+      line-height: 35px;
+      font-size: 18px;
+      font-family: 'Roboto Condensed', sans-serif;
+    }
+  }
+  .posted-by-wrapper {
+    margin-top: 25px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .posted-by-pic-wrapper {
+      .posted-by-pic {
+        height: $imageSize;
+        width: $imageSize;
+        @include border_radius(50%);
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: $imageBorder;
+        img {
+          width: 100%;
+          height: auto;
+          transform: scale(1.4);
+        }
+      }
+    }
+    .posted-by-title-wrapper {
+      padding-left: 10px;
+      .posted-by {
+        margin: 0px;
+        font-size: 20px;
+      }
+    }
+  }
+
+  .post-view-actions {
+    margin-top: 25px;
+    button {
+      margin-right: 8px;
+    }
+  }
+
+  .post-footer-section {
+    margin-top: 35px;
+    border-top: 2px solid rgba(21, 128, 42, 0.5);
+    padding-top: 25px;
+    .title {
+      font-size: 25px;
+      font-weight: bold;
+      color: $primary;
+    }
+    .comment-box-wrapper {
+      .comment-box-title {
+        font-size: 20px;
+      }
+      .comment-submit-btn-wrapper {
+        text-align: right;
+        padding: 10px 0px;
+      }
+    }
+    .discussion-wrapper {
+      margin-top: 35px;
+    }
+
+    .comment-list-wrapper {
+      margin-top: 15px;
+
+      .reply-list-wrapper {
+        margin-left: 85px;
+        margin-top: 25px;
+      }
+
+      .s-comment {
+        padding: 15px 0px;
+        outline: none;
+      }
+      .s-row {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        .left-column {
+          flex-shrink: 0;
+          .pro-pic-wrapper {
+            width: $commentPicSize;
+            height: $commentPicSize;
+            overflow: hidden;
+            object-fit: cover;
+            cursor: pointer;
+            img {
+              width: 100%;
+              height: auto;
+              border: $imageBorder;
+            }
+          }
+        }
+        .right-column {
+          flex-grow: 1;
+          padding-left: 15px;
+          position: relative;
+          .row-wrapper {
+            margin-bottom: 10px;
+          }
+          .user-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: darken($primary, 10%);
+            margin: 0px;
+            text-transform: capitalize;
+          }
+          .time-date {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2f3130;
+            margin: 0px;
+          }
+          .content {
+            font-size: 16px;
+            margin: 0px;
+            padding: 0px;
+          }
+
+          .action-wrapper {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            display: flex;
+            .action-btn {
+              padding: 0px 5px;
+              cursor: pointer;
+              color: darken($primary, 15%);
+
+              &:hover {
+                color: darken($primary, 5%);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

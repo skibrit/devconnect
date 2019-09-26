@@ -417,7 +417,7 @@ Router.get("/github/:username?", async (req, res) => {
 
     const gitClientID = config.get("githubClientID");
     const gitClientSecrent = config.get("githubSecret");
-    const uri = `http://api.github.com/users/${username}/repos?per_page=5&sort=created&direction=desc&client_id=${gitClientID}&client_secret=${gitClientSecrent}`;
+    const uri = `http://api.github.com/users/${username}/repos?per_page=6&sort=created&direction=desc&client_id=${gitClientID}&client_secret=${gitClientSecrent}`;
     //const uri = `https//api.github.com/users/${username}/repos`;
 
     const options = {

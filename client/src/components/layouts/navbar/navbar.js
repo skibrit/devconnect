@@ -20,7 +20,13 @@ const NavBar = ({ location, isAuthenticated, logout, isLoading }) => {
         <li className="nav-item">
           <Link to="/developers" className="nav-link">
             <i className="fas fa-user-friends" />
-            Developer
+            Developers
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/posts" className="nav-link">
+            <i className="fas fa-blog" />
+            Posts
           </Link>
         </li>
         <li className="nav-item">
@@ -46,7 +52,7 @@ const NavBar = ({ location, isAuthenticated, logout, isLoading }) => {
         <li className="nav-item">
           <Link to="/login" className="nav-link">
             <i className="fas fa-user-friends" />
-            Developer
+            Developers
           </Link>
         </li>
         <li className="nav-item">
@@ -70,7 +76,7 @@ const NavBar = ({ location, isAuthenticated, logout, isLoading }) => {
       className={
         pathname === "/"
           ? "navbar navbar-expand-lg navbar-dark fixed-top nav-transparent"
-          : "navbar navbar-expand-lg navbar-dark nav-fill"
+          : "navbar navbar-expand-lg navbar-dark nav-fill bg-dark"
       }
       id="mainNav"
     >

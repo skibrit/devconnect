@@ -41,7 +41,7 @@ const ProfileView = ({
         setSelectedFile(profile && profile.user && profile.user.avatar);
       }
     },
-    [isLoading]
+    [isLoading, getUserProfile]
   );
 
   const fileChooserHandler = async e => {

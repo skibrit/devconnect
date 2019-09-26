@@ -14,8 +14,16 @@ export const GET_ALL_PROFILES_ERROR = "GET ALL PROFILES ERROR";
 export const GET_GITHUB_REPOSE = "GET GITHUB REPOSE";
 export const GITHUB_REPOSE_FETCH_ERROR = "GITHUB_REPOSE_FETCH_ERROR";
 export const CLEAR_PROFILE = "clear loaded profile";
+export const GET_POSTS = "GET POSTS";
+export const GET_POST_DETAIL = "GET_POST_DETAIL";
+export const POST_ERROR = "POSTS ERROR";
+export const UPDATE_LIKE = "UPDATE_LIKE";
+export const ADD_COMMENT = "ADD_COMMENT";
+export const DELETE_COMMENT = "DELETE_COMMENT";
+export const COMMENT_ERROR = "COMMENT_ERROR";
 export const OPEN_MODAL = "OPEN MODAL";
 export const CLOSE_MODAL = "CLOSE MODAL";
+export const UPDATE_COMMENT_BOX = "UPDATE_COMMENT_BOX";
 
 export const EXPERIENCE_FORM = "experience form";
 export const EDUCATION_FORM = "education form";
