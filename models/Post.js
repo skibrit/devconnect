@@ -58,7 +58,31 @@ const PostSchema = new mongoose.Schema({
       commentDate: {
         type: Date,
         default: Date.now()
-      }
+      },
+      replies: [
+        {
+          user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "user"
+          },
+          text: {
+            type: String,
+            required: true
+          },
+          name: {
+            type: String,
+            required: true
+          },
+          avatar: {
+            type: String,
+            required: true
+          },
+          commentDate: {
+            type: Date,
+            default: Date.now()
+          }
+        }
+      ]
     }
   ],
   postDate: {

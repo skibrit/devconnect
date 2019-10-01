@@ -1,4 +1,28 @@
-.alert{
+@import "../../../assets/styles/vars.scss";
+
+.alert {
   //margin-top: 40px;
   transition: all 2s;
+}
+
+.alert-template {
+  background-color: #343a40;
+  @include box_shadow();
+  border: 1px solid rgba(104, 104, 104, .5);
+  padding: 25px 15px;
+
+  .alert-template-wrapper {
+    position: relative;
+    .alert-msg {
+      font-size: 18px;
+      color: white;
+      padding: 0px;
+      margin: 0px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+    }
+  }
 }

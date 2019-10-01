@@ -1,0 +1,45 @@
+@import "../../../assets/styles/vars";
+
+.my-post-list-wrapper {
+  .my-post-list-inner-wrapper {
+    .m-post-row {
+      padding: 5px 0px;
+    }
+
+    .m-post {
+      border: 1px solid red;
+      padding: 15px;
+      background-color: #fafafa;
+      border: 1px solid rgba($color: #000000, $alpha: 0.3);
+      position: relative;
+
+      .post-date {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .m-post-line {
+        padding-bottom: 15px;
+      }
+      .m-post-title {
+        font-size: 20px;
+        margin: 0px;
+        font-weight: bold;
+        color: darken($primary, 10%);
+        text-transform: capitalize;
+      }
+      .m-post-content-preview {
+        margin: 0px;
+        padding: 0px;
+        font-size: 16px;
+      }
+      .btn {
+        margin-right: 8px;
+      }
+    }
+  }
+}

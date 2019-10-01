@@ -6,7 +6,11 @@ import {
   DELETE_COMMENT,
   COMMENT_ERROR,
   GET_POST_DETAIL,
-  UPDATE_COMMENT_BOX
+  UPDATE_COMMENT_BOX,
+  POST_DELETED,
+  CLEAR_POST,
+  SET_POST_PREVIEW,
+  SET_EDIT_MODE
 } from "../actions/constants";
 import { stat } from "fs";
 
@@ -15,7 +19,9 @@ const defaultStates = {
   cPost: {},
   isLoading: true,
   errors: {},
-  commentBox: { commentID: null, text: "" }
+  commentBox: { commentID: null, text: "" },
+  previewPost: {},
+  editMode: null
 };
 
 export default (state = defaultStates, action) => {
@@ -26,6 +32,21 @@ export default (state = defaultStates, action) => {
       return { ...state, posts: payload, isLoading: false };
     case GET_POST_DETAIL:
       return { ...state, cPost: payload, isLoading: false };
+    case CLEAR_POST:
+      return { ...state, cPost: {}, posts: [], isLoading: false };
+    case SET_POST_PREVIEW:
+      return { ...state, previewPost: payload };
+    case SET_EDIT_MODE:
+      return { ...state, editMode: payload };
+    case POST_DELETED:
+      if (payload.isSingle) {
+        return { ...state, cPost: {} };
+      } else {
+        return {
+          ...state,
+          posts: state.posts.filter(item => item._id != payload.postID)
+        };
+      }
     case ADD_COMMENT:
       return {
         ...state,
@@ -47,13 +68,21 @@ export default (state = defaultStates, action) => {
         }
       };
     case UPDATE_LIKE:
-      return {
-        ...state,
-        posts: state.posts.map(
-          item =>
-            item._id == payload.id ? { ...item, likes: payload.likes } : item
-        )
-      };
+      if (payload.isSingle) {
+        return {
+          ...state,
+          cPost: { ...state.cPost, likes: payload.likes }
+        };
+      } else {
+        return {
+          ...state,
+          posts: state.posts.map(
+            item =>
+              item._id == payload.id ? { ...item, likes: payload.likes } : item
+          )
+        };
+      }
+
     case POST_ERROR:
       return { ...state, posts: null, errors: payload, isLoading: false };
     default:

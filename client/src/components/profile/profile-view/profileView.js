@@ -12,6 +12,7 @@ import "./profileView.scss";
 import Spinner from "../../layouts/spinner/spinner";
 import ImageLoader from "../../layouts/Image/Image";
 import GithubRepose from "./githubRepo";
+import { useAlert } from "react-alert";
 
 const ProfileView = ({
   profile: { isLoading, profile },
@@ -20,7 +21,8 @@ const ProfileView = ({
   changeAvatar,
   location: { pathname },
   isAuthenticated,
-  user
+  user,
+  history
 }) => {
   const [selectedFile, setSelectedFile] = useState(
     profile && profile.user && profile.user.avatar
@@ -44,28 +46,42 @@ const ProfileView = ({
     [isLoading, getUserProfile]
   );
 
+  const alert = useAlert();
+
   const fileChooserHandler = async e => {
+    let el = document.querySelector("#profile-pic-chooser");
     try {
-      let { base64, fileData } = await fileChooser(
-        document.querySelector("#profile-pic-chooser")
-      );
+      let { base64, fileData } = await fileChooser(el);
       changeAvatar(fileData);
       setSelectedFile(base64);
+      el.value = "";
     } catch (err) {
       console.log(err);
+      el.value = "";
+      alert.show(err.toString());
     }
+  };
+
+  const socialLinkOpenHandler = e => {
+    e.preventDefault();
+    console.log(e.currentTarget.href);
+    window.open(e.currentTarget.href);
   };
 
   return (
     <Fragment>
       {!profile
         ? <Spinner />
-        : <div className="container profile-view">
+        : <div className="section profile-view">
             <div className="profile-view-wrapper">
               <div className="profile-left-wrapper">
                 <div className="profile-photo-wrapper">
                   <div className="profile-photo-inner-wrapper">
-                    <ImageLoader src={selectedFile} alt="profile-photo" />
+                    <ImageLoader
+                      src={selectedFile}
+                      alt="profile-photo"
+                      className="profile-photo"
+                    />
                     {isAuthenticated &&
                       user &&
                       user._id == profile.user._id &&
@@ -116,8 +132,81 @@ const ProfileView = ({
                     </div>
                   </div>
                 </div>
+                {profile.social &&
+                  (profile.social.youtube ||
+                    profile.social.twitter ||
+                    profile.social.facebook ||
+                    profile.social.linkedin ||
+                    profile.social.instragram) &&
+                  <div className="profile-left-column-row">
+                    <div className="profile-left-column-row-wrapper">
+                      <div className="user-social-media">
+                        {profile.social.facebook &&
+                          <a
+                            href={"http://" + profile.social.facebook}
+                            className="social-media-link"
+                            onClick={socialLinkOpenHandler}
+                          >
+                            <img
+                              src={require("../../../assets/images/social-icons/facebook.png")}
+                            />
+                          </a>}
+                        {profile.social.linkedin &&
+                          <a
+                            href={"http://" + profile.social.linkedin}
+                            className="social-media-link"
+                            onClick={socialLinkOpenHandler}
+                          >
+                            <img
+                              src={require("../../../assets/images/social-icons/linkedin.png")}
+                            />
+                          </a>}
+                        {profile.social.youtube &&
+                          <a
+                            href={"http://" + profile.social.youtube}
+                            className="social-media-link"
+                            onClick={socialLinkOpenHandler}
+                          >
+                            <img
+                              src={require("../../../assets/images/social-icons/youtube.png")}
+                            />
+                          </a>}
+                        {profile.social.instragram &&
+                          <a
+                            href={"http://" + profile.social.instragram}
+                            className="social-media-link"
+                            onClick={socialLinkOpenHandler}
+                          >
+                            <img
+                              src={require("../../../assets/images/social-icons/instagram.png")}
+                            />
+                          </a>}
+                        {profile.social.twitter &&
+                          <a
+                            href={"http://" + profile.social.twitter}
+                            className="social-media-link"
+                            onClick={socialLinkOpenHandler}
+                          >
+                            <img
+                              src={require("../../../assets/images/social-icons/twitter.png")}
+                            />
+                          </a>}
+                      </div>
+                    </div>
+                  </div>}
               </div>
               <div className="profile-center-wrapper">
+                <div className="profile-view-action-wrapper">
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                      console.log(history);
+                      history.goBack();
+                    }}
+                  >
+                    <i className="fas fa-arrow-left" />
+                  </button>
+                </div>
                 <h2 className="user-title">
                   {profile.user.name}
                 </h2>
@@ -287,12 +376,6 @@ const ProfileView = ({
                         </div>
                       </div>
                     </div>}
-                  <div className="profile-center-row">
-                    <div className="profile-center-row-wrapper">
-                      <h4 className="profile-center-row-title">Recent Posts</h4>
-                      <div className="profile-center-row-content" />
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>

@@ -19,7 +19,9 @@ const CreateProfile = ({
   const handlePlaceChanged = () => {
     const place = autoComplete.getPlace();
     console.log(place);
-    setFormData({ ...formData, location: place.formatted_address });
+    setFormData(prevData => {
+      return { ...prevData, location: place.formatted_address };
+    });
   };
 
   useEffect(() => {
@@ -208,7 +210,7 @@ const CreateProfile = ({
               onToggleSocialTab();
             }}
           >
-            <i class="fa fa-expand" aria-hidden="true" /> Add Social Link
+            <i className="fa fa-expand" aria-hidden="true" /> Add Social Link
           </button>
           <span className="btn-clue">Optional</span>
         </div>

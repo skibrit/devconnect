@@ -2,7 +2,6 @@
 
 .profile-view {
   .profile-view-wrapper {
-    height: 500px;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -25,9 +24,11 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          img {
+          .profile-photo {
             width: 100%;
-            height: auto;
+            height: 100%;
+            display: block;
+            //min-height: 100%;
           }
 
           .change-photo-btn {
@@ -35,13 +36,13 @@
             bottom: 0px;
             left: 0px;
             width: 100%;
-            background-color: rgba(0, 0, 0, .6);
+            background-color: rgba(0, 0, 0, .5);
             text-align: center;
             padding: 5px 0px;
             cursor: pointer;
 
             &:hover {
-              background-color: rgba(0, 0, 0, .8);
+              background-color: rgba(0, 0, 0, .7);
             }
             .btn-text {
               margin: 0px;
@@ -59,6 +60,16 @@
       .profile-left-column-row {
         padding: 15px 0px;
         .profile-left-column-row-wrapper {
+          .user-social-media {
+            .social-media-link {
+              padding-right: 8px;
+              img {
+                width: 32px;
+                height: 32px;
+              }
+            }
+          }
+
           .profile-left-column-row-title {
             font-size: 17px;
             font-weight: bold;
@@ -86,6 +97,16 @@
       flex-grow: 1;
       // background-color: tan;
       height: 100%;
+      position: relative;
+
+      .profile-view-action-wrapper {
+        position: absolute;
+        top: 5px;
+        right: 0px;
+        .btn {
+          margin-left: 8px;
+        }
+      }
 
       .user-title {
         font-size: 28px;

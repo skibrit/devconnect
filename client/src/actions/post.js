@@ -6,14 +6,44 @@ import {
   DELETE_COMMENT,
   COMMENT_ERROR,
   GET_POST_DETAIL,
-  UPDATE_COMMENT_BOX
+  UPDATE_COMMENT_BOX,
+  POST_DELETED,
+  CLEAR_POST,
+  SET_POST_PREVIEW,
+  SET_EDIT_MODE
 } from "./constants";
 import { setAlert } from "./alert";
+import { removeLoader } from "./global";
 import axios from "axios";
 
 export const getPosts = () => async dispatch => {
   try {
     let response = await axios.get("/api/post");
+    dispatch({
+      type: CLEAR_POST,
+      payload: {}
+    });
+    dispatch({
+      type: GET_POSTS,
+      payload: response.data
+    });
+  } catch (err) {
+    if (err.response) {
+      dispatch({
+        type: POST_ERROR,
+        payload: { status: err.response.status, msg: err.response.statusText }
+      });
+    }
+  }
+};
+
+export const getMyPosts = () => async dispatch => {
+  try {
+    let response = await axios.get("/api/post/me");
+    dispatch({
+      type: CLEAR_POST,
+      payload: {}
+    });
     dispatch({
       type: GET_POSTS,
       payload: response.data
@@ -32,6 +62,10 @@ export const getPostDetail = id => async dispatch => {
   try {
     let response = await axios.get(`/api/post/${id}`);
     dispatch({
+      type: CLEAR_POST,
+      payload: {}
+    });
+    dispatch({
       type: GET_POST_DETAIL,
       payload: response.data
     });
@@ -45,14 +79,13 @@ export const getPostDetail = id => async dispatch => {
   }
 };
 
-export const updateLike = postID => async dispatch => {
+export const updateLike = (postID, isSingle) => async dispatch => {
   try {
     let response = await axios.put(`/api/post/like/${postID}`);
     dispatch({
       type: UPDATE_LIKE,
-      payload: { id: postID, likes: response.data }
+      payload: { id: postID, likes: response.data, isSingle }
     });
-    console.log(response);
   } catch (err) {
     if (err.response) {
       console.log(err);
@@ -64,7 +97,9 @@ export const managePost = (
   title,
   content,
   tags,
-  contentPreview
+  contentPreview,
+  history,
+  postID
 ) => async dispatch => {
   try {
     let config = {
@@ -73,13 +108,36 @@ export const managePost = (
       }
     };
     let body = { title, content, tags, contentPreview };
-    let response = await axios.post(`/api/post/`, body, config);
-    console.log(response);
-    dispatch(setAlert("Post has been published", "success"));
+    let response = await axios.post(
+      postID ? `/api/post/${postID}` : `/api/post/`,
+      body,
+      config
+    );
+
+    dispatch(removeLoader("postForm"));
+    history.push(`/post/${response.data._id}`);
   } catch (err) {
     let errors = err.response.data.errors;
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
+    }
+    dispatch(removeLoader("postForm"));
+  }
+};
+
+export const deletePost = (postID, isSingle) => async dispatch => {
+  try {
+    let response = await axios.delete(`/api/post/${postID}`);
+    dispatch({
+      type: POST_DELETED,
+      payload: { postID, isSingle }
+    });
+  } catch (err) {
+    if (err.response) {
+      dispatch({
+        type: POST_ERROR,
+        payload: { status: err.response.status, msg: err.response.statusText }
+      });
     }
   }
 };
@@ -141,5 +199,19 @@ export const updateCommentBox = (text, commentID) => dispatch => {
   dispatch({
     type: UPDATE_COMMENT_BOX,
     payload: { text, commentID }
+  });
+};
+
+export const setPostPreview = post => dispatch => {
+  dispatch({
+    type: SET_POST_PREVIEW,
+    payload: post
+  });
+};
+
+export const setEditMode = editMode => dispatch => {
+  dispatch({
+    type: SET_EDIT_MODE,
+    payload: editMode
   });
 };

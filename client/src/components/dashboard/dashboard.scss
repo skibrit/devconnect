@@ -1,27 +1,57 @@
+@import "../../assets/styles/vars";
 
+$imageSize: 54px;
 
-.create-profile-section{
+.create-profile-section {
   margin-top: 25px;
-  h5{
+  h5 {
     margin-bottom: 25px;
   }
 }
 
-.dashboard-actions-wrapper{
+.user-detail-wrapper {
+  display: flex;
+  align-items: center;
+  .user-pic-wrapper {
+    width: $imageSize;
+    height: $imageSize;
+    object-fit: cover;
+    @include border_radius(50%);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(98, 118, 105, 0.8);
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .user-title-wrapper {
+    padding-left: 10px;
+    .user-title {
+      margin: 0px;
+      font-weight: 700;
+      text-transform: capitalize;
+    }
+  }
+}
+
+.dashboard-actions-wrapper {
   margin-top: 20px;
 
-  .dashboard-action-row{
+  .dashboard-action-row {
     padding: 25px 0px;
-    .dashboard-action-inner-row{
-      .dashboard-action-title-wrapper{
-        h3{
+    .dashboard-action-inner-row {
+      .dashboard-action-title-wrapper {
+        h3 {
           font-size: 22px;
           font-weight: bold;
         }
       }
-      .dashboard-action-btn-wrapper{
+      .dashboard-action-btn-wrapper {
         margin-top: 15px;
-        .btn{
+        .btn {
           margin-right: 10px;
         }
       }

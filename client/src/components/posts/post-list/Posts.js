@@ -4,6 +4,7 @@ import { getPosts } from "../../../actions/post";
 import Spinner from "../../layouts/spinner/spinner";
 import PostItem from "./PostItem";
 import "./Posts.scss";
+import post from "../../../reducers/post";
 
 const Posts = ({
   auth: { isAuthenticated },
@@ -17,7 +18,7 @@ const Posts = ({
     [getPosts]
   );
 
-  return isLoading
+  return isLoading && posts
     ? <Spinner />
     : <div className="section">
         <div className="page-title-wrapper">

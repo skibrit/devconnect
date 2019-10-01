@@ -81,10 +81,7 @@ const profile = ({
             <div className="profile-row">
               <div className="left-column">
                 <div className="profile-photo-wrapper">
-                  <ImageLoader
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ81f3EIV_ML0nJINkoDNjqCXJWU_24FppyDJvVaFBS3O9RaaKj"
-                    alt="pro-pic"
-                  />
+                  <ImageLoader src={avatar} alt="pro-pic" />
                 </div>
               </div>
               <div className="right-column">
@@ -133,9 +130,12 @@ const profile = ({
                       />
                     </a>}
                 </div>
-                <div className="btn btn-light view-profile-btn">
+                <Link
+                  to={`profile/${_id}`}
+                  className="btn btn-light view-profile-btn"
+                >
                   <div className="btn-text">View Profile</div>
-                </div>
+                </Link>
               </div>
             </div>
           </li>}

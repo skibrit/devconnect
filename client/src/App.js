@@ -16,6 +16,8 @@ import Posts from "./components/posts/post-list/Posts";
 import CreatePost from "./components/posts/post-form/CreatePost";
 import PostView from "./components/posts/post-view/PostView";
 import Footer from "./components/layouts/footer/Footer";
+import EditPost from "./components/posts/post-form/EditPost";
+import MyPosts from "./components/posts/user-post/UserPostList";
 import "./App.scss";
 
 //redux store
@@ -45,11 +47,13 @@ function App() {
                 component={CreateProfile}
               />
               <PrivateRoute exact path="/editProfile" component={EditProfile} />
-              <PrivateRoute path="/profile" component={ProfileView} />
-              <PrivateRoute exact path="/developers" component={ProfileList} />
+              <ProfileView path="/profile" />
+              <ProfileList exact path="/developers" />
               <PrivateRoute exact path="/posts" component={Posts} />
               <PrivateRoute exact path="/createPost" component={CreatePost} />
               <PrivateRoute exact path="/post/:id" component={PostView} />
+              <PrivateRoute exact path="/editPost/:id" component={EditPost} />
+              <PrivateRoute exact path="/myposts" component={MyPosts} />
             </Switch>
           </section>
           <Footer />

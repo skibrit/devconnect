@@ -1,25 +1,23 @@
-import React from "react";
-import './home.scss';
+import React, { Fragment } from "react";
+import "./home.scss";
 import LandingPage from "../landing/landing";
-import {Redirect} from "react-router-dom";
-import {connect} from "react-redux";
+import Spinner from "../layouts/spinner/spinner";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-const Home = ({isAuthenticated,isLoading})=>{
-    if(isAuthenticated && !isLoading){
-        return(
-            <Redirect to="/dashboard"/>
-        )
-    }
-    return(
-        <div id='home'>
-            <LandingPage/>
-        </div>
-    )
+const Home = ({ isAuthenticated, isLoading, history }) => {
+  return (
+    <Fragment>
+      {isLoading
+        ? <Spinner />
+        : !isAuthenticated ? <LandingPage /> : history.push("/dashboard")}
+    </Fragment>
+  );
 };
 
 const mapStateToProps = state => ({
-   isAuthenticated:state.authStates.isAuthenticated,
-    isLoading:state.authStates.isLoading
+  isAuthenticated: state.authStates.isAuthenticated,
+  isLoading: state.authStates.isLoading
 });
 
-export default connect(mapStateToProps,null)(Home);
+export default connect(mapStateToProps, null)(withRouter(Home));

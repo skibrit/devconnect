@@ -8,6 +8,7 @@ import {
   GITHUB_REPOSE_FETCH_ERROR
 } from "./constants";
 import { setAlert } from "./alert";
+import { logout } from "./auth";
 import axios from "axios";
 
 export const getCurrentUserProfile = () => async dispatch => {
@@ -85,6 +86,30 @@ export const getGithubRepose = gitUsername => async dispatch => {
   }
 };
 
+//this function allows user to delete their profile
+export const deleteProfile = history => async dispatch => {
+  try {
+    await axios.delete("/api/profile");
+    dispatch({
+      type: CLEAR_PROFILE,
+      payload: {}
+    });
+    console.log("Profile Deleted");
+
+    dispatch(logout());
+
+    history.push("/login");
+  } catch (errors) {
+    console.log(errors);
+    if (errors.response) {
+      dispatch({
+        type: CLEAR_PROFILE,
+        payload: {}
+      });
+    }
+  }
+};
+
 //this function create or update user profile
 export const manageProfile = (
   formData,
@@ -97,7 +122,9 @@ export const manageProfile = (
         "Content-Type": "application/json"
       }
     };
+    console.log(formData);
     let response = await axios.post("/api/profile", formData, config);
+    console.log(response);
     dispatch({
       type: GET_PROFILE,
       payload: response.data

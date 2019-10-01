@@ -1,7 +1,7 @@
 const express = require("express");
 const Router = express.Router();
 const auth = require("../middlewears/authMiddlewear");
-const { check, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 const User = require("../models/User");
 const Profile = require("../models/Profile");
 const Multer = require("multer");
@@ -11,6 +11,11 @@ var appRoot = require("app-root-path");
 const request = require("request");
 const http = require("http");
 const axios = require("axios");
+const { validateString, validateEmail } = require("../utills/Validator");
+
+let tempDir = config.get("tempDir");
+let profileDir = config.get("profileDir");
+
 // @ROUTE : GET api/profile/me
 // @DESC  : This route with return the profile information of an user
 // @Access : Private
@@ -33,8 +38,8 @@ Router.get("/me", auth, async (req, res) => {
 
 // @Validation Rules
 var validationRules = [
-  check("status", "Status is required").not().isEmpty(),
-  check("skills", "Skills are required").not().isEmpty()
+  validateString("status", "Status is required"),
+  validateString("skills", "Skills are required")
 ];
 
 // @ROUTE  : Post api/profile
@@ -103,7 +108,7 @@ Router.post("/", [auth, validationRules], async (req, res) => {
 // @ROUTE : GET api/profile
 // @DESC  : This route returns all the profile in the database
 // @Access : Public
-Router.get("/", auth, async (req, res) => {
+Router.get("/", async (req, res) => {
   try {
     let profileList = await Profile.find().populate("user", ["name", "avatar"]);
     res.json(profileList);
@@ -116,11 +121,11 @@ Router.get("/", auth, async (req, res) => {
 // @ROUTE : GET api/profile/user/:id
 // @DESC  : This route returns user profile based on the url ID
 // @Access : Public
-Router.get("/user/:id", auth, async (req, res) => {
+Router.get("/user/:id", async (req, res) => {
   try {
     let profile = await Profile.findOne({
       user: req.params.id
-    }).populate("user", ["name", "avatar", "_id"]);
+    }).populate("user", ["name", "avatar", "_id", "email"]);
     if (!profile) {
       return res.status(400).json({ error: [{ msg: "Profile not found" }] });
     }
@@ -135,14 +140,19 @@ Router.get("/user/:id", auth, async (req, res) => {
 });
 
 // @ROUTE : DELETE api/profile
-// @DESC  : This route deletes the user or their posts
+// @DESC  : This route deletes the user profile
 // @Access : Private
 Router.delete("/", auth, async (req, res) => {
   try {
+    let userID = req.user.id;
+    //delete the image file if has
+    let profilePic = `${profileDir}${userID}/profile.jpg`;
+    await FileUtil.deleteFile(profilePic);
+
     //remove user profile
-    await Profile.findOneAndRemove({ user: req.user.id });
+    await Profile.findOneAndRemove({ user: userID });
     //remove user detail
-    await User.findOneAndRemove({ _id: req.user.id });
+    await User.findOneAndRemove({ _id: userID });
     res.json({ msg: "Delete has been successful" });
   } catch (err) {
     console.log(err.message);
@@ -152,10 +162,10 @@ Router.delete("/", auth, async (req, res) => {
 
 // @Validation Rules
 validationRules = [
-  check("title", "Title is required").not().isEmpty(),
-  check("company", "Company is required").not().isEmpty(),
-  check("location", "Location are required").not().isEmpty(),
-  check("from", "From Date is required").not().isEmpty()
+  validateString("title", "Title is required"),
+  validateString("company", "Company is required"),
+  validateString("location", "Location are required"),
+  validateString("from", "From Date is required")
 ];
 
 // @ROUTE  : Post api/profile/experience
@@ -225,10 +235,10 @@ Router.delete("/experience/:id", auth, async (req, res) => {
 
 // @Validation Rules
 validationRules = [
-  check("school", "School is required").not().isEmpty(),
-  check("degree", "Degree is required").not().isEmpty(),
-  check("fieldOfStudy", "Field of Study is required").not().isEmpty(),
-  check("from", "From Date is required").not().isEmpty()
+  validateString("school", "School is required"),
+  validateString("degree", "Degree is required"),
+  validateString("fieldOfStudy", "Field of Study is required"),
+  validateString("from", "From Date is required")
 ];
 
 // @ROUTE  : Post api/profile/education
@@ -301,9 +311,6 @@ Router.delete("/education/:id", auth, async (req, res) => {
     res.status(500).send("Server error ");
   }
 });
-
-let tempDir = config.get("tempDir");
-let profileDir = config.get("profileDir");
 
 var storage = Multer.diskStorage({
   destination: function(req, file, cb) {

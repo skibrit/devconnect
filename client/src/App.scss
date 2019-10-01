@@ -19,10 +19,21 @@ h6,
   font-family: 'Roboto Slab', serif;
 }
 
+.fill-overlay {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  min-height: 100%;
+  background-color: greenyellow;
+  z-index: 100;
+}
+
 .section {
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   min-height: 100vh;
+  position: relative;
 }
 .page-title-wrapper {
   margin-bottom: 25px;
@@ -119,6 +130,10 @@ h6,
   }
 }
 
+.form-wrapper {
+  position: relative;
+}
+
 .fade-out {
   height: auto;
   transition: height 1000ms;
@@ -156,5 +171,16 @@ h6,
   .default-text {
     font-size: 24px;
     font-weight: 600;
+  }
+}
+
+.liked-heart {
+  color: #fd2928;
+}
+
+.react-confirm-alert-body {
+  h1 {
+    font-size: 22px;
+    font-weight: bold;
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import { deleteComment, updateCommentBox } from "../../../actions/post";
@@ -9,7 +9,8 @@ const CommentItem = ({
   comment: { _id, user, name, avatar, text, commentDate },
   deleteComment,
   postID,
-  updateCommentBox
+  updateCommentBox,
+  userID
 }) => {
   useEffect(() => {
     console.log(`Comment-${_id} Item has rendered`);
@@ -46,31 +47,38 @@ const CommentItem = ({
           <div className="action-btn" onClick={replyBoxToggleHandler}>
             <i class="fas fa-reply" />
           </div>
-          <div
-            className="action-btn"
-            onClick={() => {
-              updateCommentBox(text, _id);
-            }}
-          >
-            <i class="fas fa-edit" />
-          </div>
-          <div className="action-btn">
-            <i
-              class="fas fa-trash-alt"
-              onClick={() => {
-                deleteComment(postID, _id);
-              }}
-            />
-          </div>
+          {userID == user &&
+            <Fragment>
+              <div
+                className="action-btn"
+                onClick={() => {
+                  updateCommentBox(text, _id);
+                }}
+              >
+                <i class="fas fa-edit" />
+              </div>
+              <div className="action-btn">
+                <i
+                  class="fas fa-trash-alt"
+                  onClick={() => {
+                    deleteComment(postID, _id);
+                  }}
+                />
+              </div>
+            </Fragment>}
         </div>
       </div>
     </div>
   );
 };
 
+const mapStateToProps = state => ({
+  userID: state.authStates.user._id
+});
+
 const mapDispatchToProps = {
   deleteComment,
   updateCommentBox
 };
 
-export default connect(null, mapDispatchToProps)(CommentItem);
+export default connect(mapStateToProps, mapDispatchToProps)(CommentItem);

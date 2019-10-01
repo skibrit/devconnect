@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const DashboardActions = () => {
+const DashboardActions = ({ deleteProfileHandler }) => {
   return (
     <div className="dashboard-actions-wrapper">
       <div className="dashboard-action-row">
@@ -18,7 +18,9 @@ const DashboardActions = () => {
             <Link to="/editProfile" className="btn btn-light">
               Edit Profile
             </Link>
-            <button className="btn btn-light">Delete Profile</button>
+            <button className="btn btn-light" onClick={deleteProfileHandler}>
+              Delete Profile
+            </button>
           </div>
         </div>
       </div>
@@ -30,7 +32,9 @@ const DashboardActions = () => {
             </h3>
           </div>
           <div className="dashboard-action-btn-wrapper">
-            <button className="btn btn-light">My Posts</button>
+            <Link to="/myposts" className="btn btn-light">
+              My Posts
+            </Link>
             <Link to="/createPost" className="btn btn-light">
               <i className="fas fa-plus" /> Add New Post
             </Link>

@@ -50,7 +50,7 @@ const NavBar = ({ location, isAuthenticated, logout, isLoading }) => {
     return (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <Link to="/login" className="nav-link">
+          <Link to="/developers" className="nav-link">
             <i className="fas fa-user-friends" />
             Developers
           </Link>
