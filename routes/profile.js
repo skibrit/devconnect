@@ -332,7 +332,7 @@ Router.post(
   [auth, upload.single("avatar")],
   async (req, res) => {
     let avatar = req.file;
-    let tempLocation = `${tempDir}${avatar.filename}`;
+    let tempLocation = `${appRoot}${tempDir}${avatar.filename}`;
 
     try {
       let userID = req.user.id;
@@ -344,7 +344,7 @@ Router.post(
       await FileUtil.isValidFile(avatar);
 
       //check if this user already has a profile directory created if not create new one
-      let profileLocation = `${profileDir}${userID}/`;
+      let profileLocation = `${appRoot}${profileDir}${userID}/`;
       let isDirectoryExist = await FileUtil.createDirectory(profileLocation);
 
       if (!isDirectoryExist) {
