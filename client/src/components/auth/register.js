@@ -6,10 +6,10 @@ import { register } from "../../actions/auth";
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
-    name: "asd",
-    email: "googlapideveloper@gmail.com",
-    password: "asd",
-    password2: "asd"
+    name: "",
+    email: "",
+    password: "",
+    password2: ""
   });
   const { name, email, password, password2 } = formData;
   const onChange = e =>

@@ -3,14 +3,16 @@ import { connect } from "react-redux";
 import { getGithubRepose } from "../../../actions/profile";
 import Spinner from "../../layouts/spinner/spinner";
 
-const GithubRepo = ({ repose, username, getGithubRepose }) => {
-  const [isRepoLoaded, setRepoLoaded] = useState(false);
+const GithubRepo = ({ repose, username, getGithubRepose, isLoading }) => {
+  const [isReUploaded, setRepoLoaded] = useState(false);
 
   useEffect(
     () => {
-      getGithubRepose(username);
+      if (!isLoading) {
+        getGithubRepose(username);
+      }
     },
-    [getGithubRepose]
+    [getGithubRepose, isLoading]
   );
 
   useEffect(
@@ -91,7 +93,8 @@ const GithubRepo = ({ repose, username, getGithubRepose }) => {
 const mapStateToProps = state => ({
   repose: state.profileStates.profile
     ? state.profileStates.profile.repose
-    : null
+    : null,
+  isLoading: state.profileStates.isLoading
 });
 
 const mapDispatchToProps = {

@@ -44,9 +44,6 @@ const CommentItem = ({
         </div>
 
         <div className="action-wrapper">
-          <div className="action-btn" onClick={replyBoxToggleHandler}>
-            <i class="fas fa-reply" />
-          </div>
           {userID == user &&
             <Fragment>
               <div

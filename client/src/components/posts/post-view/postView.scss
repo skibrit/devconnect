@@ -8,6 +8,7 @@ $imageBorder: 1px ridge rgba(0, 0, 0, 0.3);
   .post-header {
     .post-title {
       font-size: 35px;
+      // font-size: 100%;
       font-weight: bold;
       color: $primary;
       margin-bottom: 25px;
@@ -166,6 +167,17 @@ $imageBorder: 1px ridge rgba(0, 0, 0, 0.3);
           }
         }
       }
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    .post-title {
+      font-size: 30px !important;
+    }
+    $imageSize: 45px;
+    .posted-by-pic {
+      height: $imageSize !important;
+      width: $imageSize !important;
     }
   }
 }

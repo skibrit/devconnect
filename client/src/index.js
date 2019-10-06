@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/scss/bootstrap.scss";
+import "bootstrap/dist/js/bootstrap.min";
 import "./assets/styles/bootstrap.css";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "./components/layouts/alert/alertTemplate";

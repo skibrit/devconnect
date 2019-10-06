@@ -76,7 +76,7 @@ const PostView = React.memo(
               ? <EditPost />
               : <div className="s-post-wrapper">
                   <div className="post-header">
-                    <h2 className="post-title">
+                    <h2 className="post-title ">
                       {title}
                     </h2>
                     <div className="posted-by-wrapper">

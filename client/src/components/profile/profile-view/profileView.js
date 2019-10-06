@@ -6,6 +6,7 @@ import {
   getUserProfile,
   changeAvatar
 } from "../../../actions/profile";
+import { authenticateUser } from "../../../actions/auth";
 import { convertToLocalString } from "../../../utils/DateUtill";
 import { fileChooser } from "../../../utils/FileUtil";
 import "./profileView.scss";
@@ -16,13 +17,13 @@ import { useAlert } from "react-alert";
 
 const ProfileView = ({
   profile: { isLoading, profile },
-  getCurrentUserProfile,
   getUserProfile,
   changeAvatar,
   location: { pathname },
   isAuthenticated,
   user,
-  history
+  history,
+  isUserLoading
 }) => {
   const [selectedFile, setSelectedFile] = useState(
     profile && profile.user && profile.user.avatar
@@ -31,19 +32,18 @@ const ProfileView = ({
   useEffect(
     () => {
       const arr = pathname.split("/");
-      console.log(arr);
       if (arr[2]) {
         getUserProfile(arr[2].trim());
-      } else {
+      } else if (isAuthenticated) {
         getUserProfile(user._id);
+      } else if (isUserLoading) {
+        authenticateUser();
       }
       if (!isLoading) {
-        console.log(isLoading);
-        console.log(profile);
         setSelectedFile(profile && profile.user && profile.user.avatar);
       }
     },
-    [isLoading, getUserProfile]
+    [isLoading, getUserProfile, authenticateUser, isUserLoading]
   );
 
   const alert = useAlert();
@@ -106,13 +106,21 @@ const ProfileView = ({
                       </h3>
                       <div className="profile-left-column-row-content">
                         {profile.website &&
-                          <div className="content-row">
+                          <a
+                            href={profile.website}
+                            onClick={socialLinkOpenHandler}
+                            className="content-row"
+                          >
                             <h4>Website Link</h4>
-                          </div>}
+                          </a>}
                         {profile.githubUserName &&
-                          <div className="content-row">
+                          <a
+                            className="content-row"
+                            href={`https://github.com/${profile.githubUserName}`}
+                            onClick={socialLinkOpenHandler}
+                          >
                             <h4>Github Link</h4>
-                          </div>}
+                          </a>}
                       </div>
                     </div>
                   </div>}
@@ -143,7 +151,7 @@ const ProfileView = ({
                       <div className="user-social-media">
                         {profile.social.facebook &&
                           <a
-                            href={"http://" + profile.social.facebook}
+                            href={profile.social.facebook}
                             className="social-media-link"
                             onClick={socialLinkOpenHandler}
                           >
@@ -153,7 +161,7 @@ const ProfileView = ({
                           </a>}
                         {profile.social.linkedin &&
                           <a
-                            href={"http://" + profile.social.linkedin}
+                            href={profile.social.linkedin}
                             className="social-media-link"
                             onClick={socialLinkOpenHandler}
                           >
@@ -163,7 +171,7 @@ const ProfileView = ({
                           </a>}
                         {profile.social.youtube &&
                           <a
-                            href={"http://" + profile.social.youtube}
+                            href={profile.social.youtube}
                             className="social-media-link"
                             onClick={socialLinkOpenHandler}
                           >
@@ -173,7 +181,7 @@ const ProfileView = ({
                           </a>}
                         {profile.social.instragram &&
                           <a
-                            href={"http://" + profile.social.instragram}
+                            href={profile.social.instragram}
                             className="social-media-link"
                             onClick={socialLinkOpenHandler}
                           >
@@ -183,7 +191,7 @@ const ProfileView = ({
                           </a>}
                         {profile.social.twitter &&
                           <a
-                            href={"http://" + profile.social.twitter}
+                            href={profile.social.twitter}
                             className="social-media-link"
                             onClick={socialLinkOpenHandler}
                           >
@@ -387,13 +395,15 @@ const ProfileView = ({
 const mapStateToProps = state => ({
   profile: state.profileStates,
   isAuthenticated: state.authStates.isAuthenticated,
-  user: state.authStates.user
+  user: state.authStates.user,
+  isUserLoading: state.authStates.isLoading
 });
 
 const mapDispatchToProps = {
   getCurrentUserProfile,
   getUserProfile,
-  changeAvatar
+  changeAvatar,
+  authenticateUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(

@@ -29,6 +29,9 @@ const PostItem = ({
                 {title}
               </Link>
             </h2>
+            <h4 className="posted-by-name">
+              by <span>{name}</span>
+            </h4>
             <p className="post-desc">
               {contentPreview}
             </p>

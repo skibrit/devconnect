@@ -57,6 +57,14 @@ $userProfileSize: 120px;
           .post-data-wrapper {
           }
 
+          .posted-by-name {
+            font-size: 16px;
+            span {
+              font-weight: bold;
+              color: darken($primary, 30%);
+            }
+          }
+
           .post-title {
             font-size: 20px;
             font-weight: bold;
@@ -75,6 +83,19 @@ $userProfileSize: 120px;
           }
         }
       }
+    }
+  }
+
+  @media only screen and (max-width: 850px) {
+    $userProfileSize: 100px;
+    .posted-by-user-photo {
+      width: $userProfileSize !important;
+      height: $userProfileSize !important;
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    .post-left-column {
+      display: none;
     }
   }
 }

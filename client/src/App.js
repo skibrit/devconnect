@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./components/home/home";
 import Register from "./components/auth/register";
@@ -25,8 +25,22 @@ import { Provider } from "react-redux";
 import Store from "./store";
 
 function App() {
+  const wrapper = useRef(null);
+
   useEffect(() => {
     Store.dispatch(authenticateUser());
+    window.onresize = function() {
+      if (wrapper.current) {
+        if (this.window.innerWidth < 1200) {
+          wrapper.current.setAttribute(
+            "class",
+            "container-fluid section-wrapper"
+          );
+        } else {
+          wrapper.current.setAttribute("class", "container section-wrapper");
+        }
+      }
+    };
   }, []);
 
   return (
@@ -35,7 +49,7 @@ function App() {
         <Fragment>
           <Navbar />
           <Route exact path="/" component={Home} />
-          <section className="container section-wrapper">
+          <section className="container section-wrapper" ref={wrapper}>
             <Alert />
             <Switch>
               <Route exact path="/register" component={Register} />

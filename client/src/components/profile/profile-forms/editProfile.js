@@ -383,11 +383,11 @@ const EditProfile = ({
           animateOnMount={false}
         >
           <div className={showSocialLinkTab ? "fade-out" : "fade-in"}>
-            <div className="form-group row">
-              <label htmlFor="name" className="col-sm-1 social-icon">
+            <div className="form-group row social-link-group">
+              <label htmlFor="name" className="social-label">
                 <i className="fab fa-youtube youtube" />
               </label>
-              <div className="col-sm-10">
+              <div className="social-input">
                 <input
                   type="text"
                   className="form-control"
@@ -399,11 +399,11 @@ const EditProfile = ({
                 />
               </div>
             </div>
-            <div className="form-group row">
-              <label htmlFor="name" className="col-sm-1 social-icon">
+            <div className="form-group row social-link-group">
+              <label htmlFor="name" className="social-label">
                 <i className="fab fa-twitter twitter" />
               </label>
-              <div className="col-sm-10">
+              <div className="social-input">
                 <input
                   type="text"
                   className="form-control"
@@ -415,11 +415,11 @@ const EditProfile = ({
                 />
               </div>
             </div>
-            <div className="form-group row">
-              <label htmlFor="name" className="col-sm-1 social-icon">
+            <div className="form-group row social-link-group">
+              <label htmlFor="name" className="social-label">
                 <i className="fab fa-facebook-f facebook" />
               </label>
-              <div className="col-sm-10">
+              <div className="social-input">
                 <input
                   type="text"
                   className="form-control"
@@ -431,11 +431,11 @@ const EditProfile = ({
                 />
               </div>
             </div>
-            <div className="form-group row">
-              <label htmlFor="name" className="col-sm-1 social-icon">
+            <div className="form-group row social-link-group">
+              <label htmlFor="name" className="social-label">
                 <i className="fab fa-linkedin-in linkdin" />
               </label>
-              <div className="col-sm-10">
+              <div className="social-input">
                 <input
                   type="text"
                   className="form-control"
@@ -447,11 +447,11 @@ const EditProfile = ({
                 />
               </div>
             </div>
-            <div className="form-group row">
-              <label htmlFor="name" className="col-sm-1 social-icon">
+            <div className="form-group row social-link-group">
+              <label htmlFor="name" className="social-label">
                 <i className="fab fa-instagram instragram" />
               </label>
-              <div className="col-sm-10">
+              <div className="social-input">
                 <input
                   type="text"
                   className="form-control"

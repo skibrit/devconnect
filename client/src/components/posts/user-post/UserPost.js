@@ -48,10 +48,10 @@ const UserPost = ({
             {likes && likes.length}
           </button>
           <Link to={`/editPost/${_id}`} className="btn btn-light">
-            <i class="fas fa-edit" />
+            <i className="fas fa-edit" />
           </Link>
           <button className="btn btn-light" onClick={e => deletePost(_id)}>
-            <i class="fas fa-trash-alt" />
+            <i className="fas fa-trash-alt" />
           </button>
         </div>
       </div>

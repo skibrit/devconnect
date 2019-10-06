@@ -3,7 +3,7 @@
 .layout-btn-wrapper {
   position: absolute;
   right: 0px;
-  top: 25px;
+  top: 12px;
   .layout-btn-inner-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -41,6 +41,7 @@
 
     .slice-layout {
       width: 50%;
+      min-width: 450px;
 
       .left-column {
         width: auto;
@@ -149,6 +150,36 @@
           transform: scale(1.2);
         }
       }
+    }
+  }
+
+  @media only screen and (max-width: 960px) {
+    .devList {
+      justify-content: space-evenly;
+    }
+    .slice-layout {
+      width: 100% !important;
+      min-width: 100% !important;
+      padding-right: 0px !important;
+    }
+  }
+
+  @media only screen and (max-width: 810px) {
+    .card-layout {
+      width: 260px !important;
+    }
+    .dev-Row {
+      padding-right: 0px !important;
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    .profile-row {
+      flex-wrap: wrap;
+      //  justify-content: center !important;
+    }
+    .slice-layout {
+      width: 100% !important;
     }
   }
 }
