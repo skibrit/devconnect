@@ -1,8 +1,8 @@
 {
   "mongoURI": "mongodb+srv://skibrit:sky123net@cluster0-rjlbt.mongodb.net/devconnect?retryWrites=true&w=majority",
   "jwtSecret": "universe",
-  "tempDir": "uploads/temp/",
-  "profileDir": "uploads/users/",
+  "tempDir": "/uploads/temp/",
+  "profileDir": "/uploads/users/",
   "githubClientID": "5bc03b6e6299308032a7",
   "githubSecret": "d528e71eb1bd7049549ed25cc1a03d0eae51fcc4"
 }
