@@ -4,5 +4,7 @@
   "tempDir": "/uploads/temp/",
   "profileDir": "/uploads/users/",
   "githubClientID": "5bc03b6e6299308032a7",
-  "githubSecret": "d528e71eb1bd7049549ed25cc1a03d0eae51fcc4"
+  "githubSecret": "d528e71eb1bd7049549ed25cc1a03d0eae51fcc4",
+  "dropbox_access_token": "HaG8qz0KoSAAAAAAAAABVPEcSzbFpb9J8H0YCTcAeH-Xm8IiE9e93EyLZ3yzd8jV",
+  "dropbox_path_name": "/devconnect_uploads/propics/"
 }
