@@ -9,9 +9,10 @@ const config = require("config");
 const FileUtil = require("../utills/FileUtills.js");
 var appRoot = require("app-root-path");
 const request = require("request");
-const http = require("http");
 const axios = require("axios");
 const { validateString, validateEmail } = require("../utills/Validator");
+const Dropbox = require("dropbox").Dropbox;
+const fetch = require("isomorphic-fetch");
 
 let tempDir = config.get("tempDir");
 let profileDir = config.get("profileDir");
@@ -312,16 +313,7 @@ Router.delete("/education/:id", auth, async (req, res) => {
   }
 });
 
-var storage = Multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, tempDir);
-  },
-  filename: function(req, file, cb) {
-    let extension = file.originalname.split(".").pop();
-    cb(null, Date.now() + `.${extension}`); //Appending .jpg
-  }
-});
-
+var storage = Multer.memoryStorage();
 var upload = Multer({ storage: storage });
 
 // @ROUTE  : Post api/profile/changeAvatar
@@ -332,7 +324,6 @@ Router.post(
   [auth, upload.single("avatar")],
   async (req, res) => {
     let avatar = req.file;
-    let tempLocation = `${appRoot}${tempDir}${avatar.filename}`;
 
     try {
       let userID = req.user.id;
@@ -343,38 +334,50 @@ Router.post(
       //check if the file is valid
       await FileUtil.isValidFile(avatar);
 
-      //check if this user already has a profile directory created if not create new one
-      let profileLocation = `${appRoot}${profileDir}${userID}/`;
-      let isDirectoryExist = await FileUtil.createDirectory(profileLocation);
+      let file = await FileUtil.resize(avatar.buffer);
 
-      if (!isDirectoryExist) {
-        throw "No profile directory found and unable to create a new one";
-      }
+      let access_token = config.get("dropbox_access_token");
+      let pathName = config.get("dropbox_path_name");
 
-      //copy file
-      await FileUtil.resizeAndSave(
-        tempLocation,
-        `${profileLocation}profile.jpg`
-      );
+      let options = {
+        method: "POST",
+        url: "https://content.dropboxapi.com/2/files/upload",
+        headers: {
+          "Content-Type": "application/octet-stream",
+          Authorization: "Bearer " + access_token,
+          "Dropbox-API-Arg":
+            '{"path": "' +
+            pathName +
+            userID +
+            ".jpg" +
+            '","mode": "overwrite","autorename": true,"mute": false}'
+        },
+        body: file
+      };
 
-      //delete the uploaded file from temp folder
-      await FileUtil.deleteFile(tempLocation);
+      request(options, async function(err, response, body) {
+        console.log("Err : " + err);
+        console.log("res : " + res);
+        console.log("body : " + body);
 
-      let baseUrl = req.protocol + "://" + req.headers.host;
-      let avatarUrl = baseUrl + `/api/profile/avatar/${userID}`;
+        if (err) res.status(500).send("server error");
 
-      let userDetail = await User.findOneAndUpdate(
-        { _id: userID },
-        { $set: { avatar: avatarUrl } },
-        { new: true }
-      );
+        let baseUrl = req.protocol + "://" + req.headers.host;
+        let avatarUrl = baseUrl + `/api/profile/avatar/${userID}`;
 
-      console.log(userDetail);
-      res.json({
-        status: 200,
-        msg: "avatar has been updated"
+        await User.findOneAndUpdate(
+          { _id: userID },
+          { $set: { avatar: avatarUrl } },
+          { new: true }
+        );
+
+        res.json({
+          status: 200,
+          msg: "avatar has been updated"
+        });
       });
     } catch (err) {
+      console.log(err);
       await FileUtil.deleteFile(tempLocation);
       res.json({
         status: 500,
@@ -389,6 +392,36 @@ Router.post(
 // @Access : Private
 Router.get("/avatar/:id?", async (req, res) => {
   try {
+    let access_token = config.get("dropbox_access_token");
+    let pathName = config.get("dropbox_path_name");
+
+    var dbx = new Dropbox({
+      accessToken: access_token,
+      fetch: fetch
+    });
+
+    let file = await dbx.filesDownload({
+      path: pathName + `${req.params.id}.jpg`
+    });
+
+    console.log(file);
+
+    res.setHeader("content-type", "image/jpg");
+
+    res.send(file.fileBinary);
+
+    /* dbx
+      .filesListFolder({ path: pathName })
+      .then(function(response) {
+        console.log(response);
+        res.json(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+        res.status(400).json(error);
+      });*/
+
+    /*
     let userID;
     if (req.user && req.user.id) {
       userID = req.user.id;
@@ -406,9 +439,9 @@ Router.get("/avatar/:id?", async (req, res) => {
       }
     } else {
       res.status(400).send("No avatar found");
-    }
+    }*/
   } catch (err) {
-    res.status(500).send("Server error");
+    res.status(500).json(err);
   }
 });
 

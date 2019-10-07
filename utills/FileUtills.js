@@ -53,16 +53,28 @@ function writeFile(fileData, filePath, encodeType = "utf8") {
   });
 }
 
-function readFile(filePath, encodeType = "utf8") {
+function readFile(filePath, encodeType) {
   return new Promise(async function(resolve, reject) {
-    fs.readFile(filePath, encodeType, function(err, data) {
-      if (err) reject("No File Exist");
-      if (data) {
-        resolve(JSON.parse(data));
-      } else {
-        reject("No data found");
-      }
-    });
+    if (encodeType) {
+      fs.readFile(filePath, encodeType, function(err, data) {
+        if (err) reject("No File Exist");
+        if (data) {
+          resolve(data);
+        } else {
+          reject("No data found");
+        }
+      });
+    } else {
+      console.log("No arg");
+      fs.readFile(filePath, function(err, data) {
+        if (err) reject("No File Exist");
+        if (data) {
+          resolve(data);
+        } else {
+          reject("No data found");
+        }
+      });
+    }
   });
 }
 
@@ -147,6 +159,25 @@ function resizeAndSave(
   });
 }
 
+function resize(buffer, width = 250, height = 250, quality = 50) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let file;
+      if (height == -1) {
+        file = await Jimp.read(buffer);
+        file.resize(width, Jimp.AUTO).quality(quality);
+      } else {
+        file = await Jimp.read(buffer);
+        file.resize(width, height).quality(quality);
+      }
+      let fileBuffer = await file.getBufferAsync(Jimp.MIME_JPEG);
+      resolve(fileBuffer);
+    } catch (err) {
+      reject(err.toString());
+    }
+  });
+}
+
 function isValidFile(
   file,
   fileSize = 1e6,
@@ -186,5 +217,6 @@ module.exports = {
   resizeAndSave,
   isFileExist,
   getExtension,
-  isValidFile
+  isValidFile,
+  resize
 };

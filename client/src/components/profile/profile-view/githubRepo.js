@@ -56,7 +56,7 @@ const GithubRepo = ({ repose, username, getGithubRepose, isLoading }) => {
                           </a>
                         </h3>
                         <h4 className="repo-desc">
-                          {description.length > 40
+                          {description && description.length > 40
                             ? description.substring(0, 40) + " ..."
                             : description}
                         </h4>
