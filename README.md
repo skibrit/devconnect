@@ -1,2 +1,5 @@
 # devconnect
-a social media for developers
+a social media blog for developers
+
+## Live Link
+(https://devconnect123.herokuapp.com)
